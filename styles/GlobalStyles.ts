@@ -6,7 +6,9 @@ const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
   }
-
+  input{
+    all:unset;
+  }
   body {
     font-family: 'Noto Sans KR', sans-serif;
     line-height: 1.5;

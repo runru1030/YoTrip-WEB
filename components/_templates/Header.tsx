@@ -20,4 +20,5 @@ const Head = styled.header`
   background-color: ${({ theme }) => theme.colors.gray0};
   position: sticky;
   top: 0;
+  z-index: 99;
 `;

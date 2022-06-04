@@ -9,6 +9,6 @@ export const InputScheme = {
   primaryDark: {
     bgColor: ColorScheme.gray100,
     color: ColorScheme.white,
-    borderColor: ColorScheme.gray200,
+    borderColor: ColorScheme.gray300,
   },
 };

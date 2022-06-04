@@ -106,5 +106,5 @@ const StyledInput = styled.input<IInputProps>`
     cursor: pointer;
   }
 
-  padding: 0.7rem 0.5rem;
+  padding: 8px 16px;
 `;

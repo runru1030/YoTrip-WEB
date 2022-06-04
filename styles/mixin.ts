@@ -12,6 +12,12 @@ export const MainCardWrapper = styled(Flex)<{ shadow?: boolean }>`
   background-color: ${({ theme }) => theme.colors.gray200};
   ${({ shadow }) => shadow && ShadowRound({})}
 `;
+
+export const DarkCardWrapper = styled(Flex)<{ shadow?: boolean }>`
+  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.gray100};
+  ${({ shadow }) => shadow && ShadowRound({})}
+`;
 export const ShadowRound = ({
   x = "0px",
   y = "0px",

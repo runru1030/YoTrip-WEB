@@ -1,13 +1,15 @@
 import React, { HTMLAttributes } from "react";
-import styled from "styled-components";
+import styled, { T_COLOR_SCHEME } from "styled-components";
 import Flex from "components/_atoms/Flex";
-interface IProps extends HTMLAttributes<HTMLDivElement> {}
-const BottomBar: React.FC<IProps> = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
+interface IProps extends HTMLAttributes<HTMLDivElement> {
+  bgColor?: T_COLOR_SCHEME;
+}
+const BottomBar: React.FC<IProps> = ({ children, bgColor = "gray0" }) => {
+  return <Wrapper {...{ bgColor }}>{children}</Wrapper>;
 };
 
 export default BottomBar;
-const Wrapper = styled(Flex)`
+const Wrapper = styled(Flex)<{ bgColor?: T_COLOR_SCHEME }>`
   width: 100%;
   min-height: 60px;
   padding: 20px;
@@ -16,4 +18,5 @@ const Wrapper = styled(Flex)`
   align-items: center;
   position: sticky;
   bottom: 0;
+  background-color: ${({ theme, bgColor }) => theme.colors[bgColor!]};
 `;
