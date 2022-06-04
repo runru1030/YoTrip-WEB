@@ -3,8 +3,8 @@ import { ColorScheme } from "./ColorScheme";
 export const ButtonScheme = {
   /* primary */
   primary: {
-    // bgColor: ColorScheme.primaryRegular_400,
-    // color: ColorScheme.white,
+    bgColor: ColorScheme.primary,
+    color: ColorScheme.white,
     // hoverBgColor: ColorScheme.primaryHover_600,
     // hoverColor: ColorScheme.white,
     // disabledBgColor: ColorScheme.gray_1100,
