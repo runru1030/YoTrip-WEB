@@ -36,6 +36,9 @@ const MainTemplate = () => {
       cost: 30000,
     },
   ];
+  const handleClickAdd = () => {
+    router.push("/addTrip");
+  };
   return (
     <>
       <Header />
@@ -47,7 +50,7 @@ const MainTemplate = () => {
         </Grid>
       </MainScrollWrapper>
       <BottomBar>
-        <AddButton btnType="positive">
+        <AddButton btnType="positive" onClick={handleClickAdd}>
           여행 추가하기 <AddIcon />
         </AddButton>
       </BottomBar>
@@ -65,9 +68,9 @@ const AddButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius:8px;
-  font-size:medium;
-  padding:15px 15px;
-  ${ShadowRound({color: '#FFFFFF10'})}
+  border-radius: 8px;
+  font-size: medium;
+  padding: 15px 15px;
+  ${ShadowRound({ color: "#FFFFFF10" })}
   font-weight:bold;
 `;

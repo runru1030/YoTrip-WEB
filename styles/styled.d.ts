@@ -1,5 +1,5 @@
 import "styled-components";
-import { ColorScheme } from "./scheme/ColorScheme";
+import * as Scheme from "./schemes";
 
 declare module "styled-components" {
   export const FontSize = {
@@ -23,8 +23,9 @@ declare module "styled-components" {
     xBold: "800",
     black: "900",
   };
-  export type T_COLOR_SCHEME = keyof typeof ColorScheme;
-  export type T_BUTTON_TYPE_SCHEME = keyof typeof ButtonScheme;
+  export type T_COLOR_SCHEME = keyof typeof Scheme.ColorScheme;
+  export type T_BUTTON_TYPE_SCHEME = keyof typeof Scheme.ButtonScheme;
+  export type T_INPUT_TYPE_SCHEME = keyof typeof Scheme.InputScheme;
   export type T_FONT_SIZE = keyof typeof FontSize;
   export type T_FONT_WEIGHT = keyof typeof FontWeight;
 
@@ -41,6 +42,9 @@ declare module "styled-components" {
     device?: {};
     btnType: {
       [type: T_BUTTON_TYPE_SCHEME]: any;
+    };
+    inputType: {
+      [type: T_INPUT_TYPE_SCHEME]: any;
     };
   }
 }

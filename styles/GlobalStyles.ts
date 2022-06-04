@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
-import { ColorScheme } from "./scheme/ColorScheme";
+import { ColorScheme } from "./schemes/ColorScheme";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   *, *::before, *::after {

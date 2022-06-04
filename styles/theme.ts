@@ -1,6 +1,7 @@
 import { DefaultTheme } from "styled-components";
-import { ButtonScheme } from "./scheme/ButtonScheme";
-import { ColorScheme } from "./scheme/ColorScheme";
+import { ButtonScheme } from "./schemes/ButtonScheme";
+import { ColorScheme } from "./schemes/ColorScheme";
+import { InputScheme } from "./schemes/InputScheme";
 
 export const deviceSizes = {
   mobile: "375px",
@@ -41,6 +42,9 @@ export const theme: DefaultTheme = {
   },
   btnType: {
     ...ButtonScheme,
+  },
+  inputType: {
+    ...InputScheme,
   },
   device,
 };
