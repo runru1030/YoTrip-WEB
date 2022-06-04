@@ -16,7 +16,7 @@ const LoginTemplate = () => {
     switch (type) {
       case "kakao":
       case "google":
-        router.push("");
+        router.push("/main");
         break;
 
       default:

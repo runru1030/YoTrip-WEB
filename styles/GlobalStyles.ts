@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: "Helvetica", "Arial", sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     line-height: 1.5;
     background-color: ${ColorScheme.gray0};
     color:white;
