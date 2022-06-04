@@ -1,3 +1,4 @@
+import wrapper from "modules/store";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { ThemeProvider } from "styled-components";
@@ -16,5 +17,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-// export default wrapper.withRedux(appWithTranslation(MyApp));
-export default MyApp;
+export default wrapper.withRedux(MyApp);
