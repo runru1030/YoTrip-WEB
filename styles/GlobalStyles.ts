@@ -1,5 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
-import { reset } from 'styled-reset';
+import { createGlobalStyle } from "styled-components";
+import { reset } from "styled-reset";
+import { ColorScheme } from "./scheme/ColorScheme";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   *, *::before, *::after {
@@ -9,6 +10,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
+    background-color: ${ColorScheme.gray0};
+    color:white;
   }
 
 `;

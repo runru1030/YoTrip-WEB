@@ -16,6 +16,7 @@ interface IProps extends HTMLAttributes<HTMLDivElement> {
   borderRadius?: string;
   pos?: "relative" | "absolute" | "fixed" | "sticky";
   maxWidth?: string;
+  flex?: number;
 }
 const Flex = React.forwardRef<HTMLDivElement, IProps>(
   (
@@ -35,6 +36,7 @@ const Flex = React.forwardRef<HTMLDivElement, IProps>(
       borderRadius,
       maxWidth,
       pos,
+      flex,
       ...restParams
     },
     ref
@@ -53,8 +55,10 @@ const Flex = React.forwardRef<HTMLDivElement, IProps>(
           padding,
           borderRadius,
           maxWidth,
+          width,
           pos,
           ref,
+          flex,
         }}
         {...restParams}
       >
@@ -70,10 +74,11 @@ export default Flex;
 const Container = styled.div<IProps>`
   display: flex;
   flex-direction: ${(props) => props.dir};
+  flex: ${({ flex }) => flex};
   gap: ${({ gap }) => gap};
-  width: ${(props) => props.width};
   height: ${(props) => props.height};
   max-width: ${(props) => props.maxWidth};
+  width: ${(props) => props.width};
   position: ${(props) => props.pos};
   border-radius: ${(props) => props.borderRadius};
   ${({ spaceBetween }) =>

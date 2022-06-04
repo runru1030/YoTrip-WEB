@@ -1,9 +1,10 @@
+import LoginTemplate from "components/_templates/LoginTemplate";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
     <>
-      <main></main>
+      <LoginTemplate />
     </>
   );
 };

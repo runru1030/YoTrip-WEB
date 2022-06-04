@@ -1,9 +1,10 @@
 import Flex from "components/_atoms/Flex";
 import styled, { css } from "styled-components";
 
-export const MainWrapper = styled.main`
+export const MainWrapper = styled(Flex)`
   width: 100%;
   height: 100vh;
+  align-items: center;
 `;
 
 export const MainCardWrapper = styled(Flex)<{ shadow?: boolean }>`
