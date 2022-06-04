@@ -1,8 +1,20 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "styles/GlobalStyles";
+import { theme } from "styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <ThemeProvider theme={theme}>
+      <Head>
+        <title>요트립</title>
+      </Head>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }
 
-export default MyApp
+// export default wrapper.withRedux(appWithTranslation(MyApp));
+export default MyApp;
