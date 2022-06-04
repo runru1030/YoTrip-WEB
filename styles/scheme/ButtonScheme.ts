@@ -13,8 +13,8 @@ export const ButtonScheme = {
 
   /* positive */
   positive: {
-    // bgColor: ColorScheme.positiveRegular_300,
-    // color: ColorScheme.white,
+    bgColor: ColorScheme.gray200,
+    color: ColorScheme.white,
     // hoverBgColor: ColorScheme.positiveHover_600,
     // hoverColor: ColorScheme.white,
     // disabledBgColor: ColorScheme.gray_1100,
