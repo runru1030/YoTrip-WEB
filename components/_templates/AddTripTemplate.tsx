@@ -3,11 +3,19 @@ import Flex from "components/_atoms/Flex";
 import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
 import { debounce } from "lodash";
+import {
+  addTripCountry,
+  initCountryInfo,
+  selectTripCreationState,
+  setStatus,
+  setTripInfo,
+} from "modules/slices/tripCreationSlice";
 import { CountryList } from "public/Country";
 import React, { useMemo, useState } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   DarkCardWrapper,
@@ -33,15 +41,10 @@ interface ITripInfo {
   mateList: number[];
 }
 const AddTripTemplate = () => {
-  const [tripInfo, setTripInfo] = useState<ITripInfo>({
-    title: "",
-    countries: [],
-    mateList: [],
-  });
-  const [countryInfo, setCountryInfo] = useState({
-    name: "",
-    detail: "",
-  });
+  const { countryInfo, tripInfo, tripCreationSatus } = useSelector(
+    selectTripCreationState
+  );
+
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -55,18 +58,13 @@ const AddTripTemplate = () => {
       key: ranges["selection"].key,
     });
   };
+  const dispatch = useDispatch();
   const handleChangeInput = (e: React.ChangeEvent) => {
     const { id, value } = e.target as HTMLInputElement;
+    dispatch(setTripInfo({ value, type: id }));
     switch (id) {
-      case "title":
-        setTripInfo((p) => ({ ...p, title: value }));
-        break;
       case "countryName":
-        setCountryInfo((p) => ({ ...p, name: value }));
         handleSearchCountry(value);
-        break;
-      case "countryDetail":
-        setCountryInfo((p) => ({ ...p, detail: value }));
         break;
       case "mateNickname":
         setMateNickname(value);
@@ -92,10 +90,6 @@ const AddTripTemplate = () => {
     []
   );
 
-  const [writeState, setWriteState] = useState<
-    "country" | "detail" | "date" | "confirm"
-  >("country");
-
   const TripInfoAddContent = {
     country: (
       <>
@@ -114,8 +108,8 @@ const AddTripTemplate = () => {
             <Span
               key={country.code_2}
               onClick={() => {
-                setCountryInfo((p) => ({ ...p, name: country.code_kr }));
-                setWriteState("detail");
+                setTripInfo({ value: country.code_kr, type: "countryName" });
+                dispatch(setStatus("detail"));
               }}
             >
               {country.code_kr}
@@ -142,7 +136,7 @@ const AddTripTemplate = () => {
         ></Input>
         <Button
           onClick={() => {
-            setWriteState("date");
+            dispatch(setStatus("date"));
           }}
           borderRadius="8px"
         >
@@ -160,23 +154,15 @@ const AddTripTemplate = () => {
         />
         <Button
           onClick={() => {
-            setTripInfo((p) => ({
-              ...p,
-              countries: [
-                ...p.countries,
-                {
-                  ...countryInfo,
-                  startDate: selectionRange.startDate,
-                  endDate: selectionRange.endDate,
-                },
-              ],
-            }));
-            setCountryInfo({
-              name: "",
-              detail: "",
-            });
+            dispatch(
+              addTripCountry({
+                startDate: selectionRange.startDate,
+                endDate: selectionRange.endDate,
+              })
+            );
+            dispatch(initCountryInfo());
             setResultCountries([]);
-            setWriteState("confirm");
+            dispatch(setStatus("confirm"));
           }}
           borderRadius="8px"
         >
@@ -208,7 +194,7 @@ const AddTripTemplate = () => {
         ))}
         <Button
           onClick={() => {
-            setWriteState("country");
+            dispatch(setStatus("country"));
           }}
           borderRadius="8px"
         >
@@ -221,7 +207,7 @@ const AddTripTemplate = () => {
     <>
       <Header />
       <MainScrollWrapper dir="column" gap="20px">
-        <MainCardWrapper dir="column" gap="10px">
+        <MainCardWrapper dir="column" gap="16px">
           <Input
             type="text"
             placeholder="트립 이름"
@@ -231,10 +217,10 @@ const AddTripTemplate = () => {
             onChange={handleChangeInput}
           ></Input>
         </MainCardWrapper>
-        <MainCardWrapper dir="column" gap="10px">
-          {TripInfoAddContent[writeState]}
+        <MainCardWrapper dir="column" gap="16px">
+          {TripInfoAddContent[tripCreationSatus]}
         </MainCardWrapper>
-        <MainCardWrapper dir="column" gap="10px">
+        <MainCardWrapper dir="column" gap="16px">
           <Span bold>트립 메이트</Span>
           <Input
             type="text"
@@ -258,11 +244,12 @@ const AddTripTemplate = () => {
 
 export default AddTripTemplate;
 const MainScrollWrapper = styled(MainWrapper)`
-  max-height: calc(100vh - 50px- 94px);
+  margin: 20px 0;
+  max-height: calc(100vh - 90px - 94px);
   overflow: scroll;
   & > div {
     width: 90%;
-    padding: 15px;
+    padding: 16px;
   }
 `;
 const AddButton = styled(Button)`

@@ -8,7 +8,7 @@ export const MainWrapper = styled(Flex)`
 `;
 
 export const MainCardWrapper = styled(Flex)<{ shadow?: boolean }>`
-  border-radius: 8px;
+  border-radius: 16px;
   background-color: ${({ theme }) => theme.colors.gray200};
   ${({ shadow }) => shadow && ShadowRound({})}
 `;
