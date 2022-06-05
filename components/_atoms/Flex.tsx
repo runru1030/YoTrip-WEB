@@ -82,6 +82,7 @@ const Container = styled.div<IProps>`
   position: ${(props) => props.pos};
   border-radius: ${(props) => props.borderRadius};
   padding: ${({ padding }) => padding};
+  margin: ${({ margin }) => margin};
   ${({ spaceBetween }) =>
     spaceBetween &&
     css`
