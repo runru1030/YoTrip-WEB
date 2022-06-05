@@ -1,4 +1,9 @@
-export const CountryList = [
+export interface ICountry {
+  code_2: string;
+  code_kr: string;
+  code_en: string;
+}
+export const CountryList: ICountry[] = [
   {
     code_2: "KR",
     code_kr: "대한민국",

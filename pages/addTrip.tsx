@@ -1,4 +1,4 @@
-import AddTripTemplate from "components/_templates/AddTripTemplate";
+import AddTripTemplate from "components/AddTrip/_templates/AddTripTemplate";
 import React from "react";
 
 interface IProps {}

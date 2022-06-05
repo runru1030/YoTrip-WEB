@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ICountry } from "public/Country";
 import { RootState } from "../store";
 
 interface ICountryInfo {
@@ -14,11 +15,12 @@ interface ITripInfo {
   countries: ICountryTotalInfo[];
   mateList: number[];
 }
-type T_TRIP_CREATE_STATUS = "country" | "detail" | "date" | "confirm";
+export type T_TRIP_CREATE_STATUS = "country" | "detail" | "date" | "confirm";
 interface ItripCreationState {
   tripInfo: ITripInfo;
   countryInfo: ICountryInfo;
   tripCreationSatus: T_TRIP_CREATE_STATUS;
+  countryResult: ICountry[];
 }
 const initialState: ItripCreationState = {
   tripInfo: {
@@ -31,6 +33,7 @@ const initialState: ItripCreationState = {
     detail: "",
   },
   tripCreationSatus: "country",
+  countryResult: [],
 };
 
 const tripCreationSlice = createSlice({
@@ -42,10 +45,13 @@ const tripCreationSlice = createSlice({
       switch (type) {
         case "title":
           state.tripInfo.title = value;
+          break;
         case "countryName":
           state.countryInfo.name = value;
+          break;
         case "countryDetail":
           state.countryInfo.detail = value;
+          break;
       }
     },
     addTripCountry(state, { payload }) {
@@ -53,6 +59,7 @@ const tripCreationSlice = createSlice({
     },
     initCountryInfo(state) {
       state.countryInfo = initialState.countryInfo;
+      state.countryResult = [];
     },
     setStatus(state, { payload }) {
       state.tripCreationSatus = payload;

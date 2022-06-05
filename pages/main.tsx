@@ -1,5 +1,5 @@
 import LoginTemplate from "components/_templates/LoginTemplate";
-import MainTemplate from "components/_templates/MainTemplate";
+import MainTemplate from "components/Main/_templates/MainTemplate";
 import React from "react";
 
 interface IProps {}

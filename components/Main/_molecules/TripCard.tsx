@@ -2,7 +2,7 @@ import Span from "components/_atoms/Span";
 import { MainCardWrapper } from "styles/mixin";
 import styled from "styled-components";
 import Flex from "components/_atoms/Flex";
-import Profile from "./Profile";
+import Profile from "../../_molecules/Profile";
 import { numberWithCommas } from "utils/function";
 interface IProps {
   tripInfo: {

@@ -6,11 +6,11 @@ import Span from "components/_atoms/Span";
 import Flex from "components/_atoms/Flex";
 import Button from "components/_atoms/Button";
 import { useRouter } from "next/router";
-import Header from "./Header";
-import TripCard from "components/_molecules/TripCard";
+import Header from "../../_templates/Header";
+import TripCard from "components/Main/_molecules/TripCard";
 import Grid from "components/_atoms/Grid";
 import AddIcon from "@mui/icons-material/Add";
-import BottomBar from "./BottomBar";
+import BottomBar from "../../_templates/BottomBar";
 const MainTemplate = () => {
   const router = useRouter();
   const tripInfoList = [

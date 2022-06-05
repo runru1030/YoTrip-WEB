@@ -3,5 +3,5 @@ export const numberWithCommas = (cost: number) => {
 };
 
 export const dateFormater = (date: Date) => {
-  return date.toLocaleDateString().replace(/\./g, "");
+  return date.toISOString().split("T")[0].replaceAll("-", ".");
 };

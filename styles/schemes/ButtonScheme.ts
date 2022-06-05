@@ -29,4 +29,8 @@ export const ButtonScheme = {
     // disabledBgColor: ColorScheme.gray_1100,
     // disabledColor: ColorScheme.gray_700,
   },
+  unset: {
+    bgColor: "unset",
+    color: "unset",
+  },
 };
