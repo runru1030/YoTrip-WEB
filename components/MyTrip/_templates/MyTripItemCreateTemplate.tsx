@@ -12,6 +12,7 @@ import Header from "../../_templates/Header";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import TripInfoContainer from "../_molecules/TripInfoContainer";
+import BottomBar from "components/_templates/BottomBar";
 
 const MyTripItemCreateTemplate = () => {
   const itemInfo = {
@@ -65,11 +66,13 @@ const MyTripItemCreateTemplate = () => {
             <Span bold>비용 기간</Span>
             <DateRange />
           </Flex>
-          <Button borderRadius="12px" padding="16px">
-            추가
-          </Button>
         </MainCardWrapper>
       </MainScrollWrapper>
+      <BottomBar>
+        <Button borderRadius="12px" padding="16px" width="100%">
+          추가
+        </Button>
+      </BottomBar>
     </>
   );
 };

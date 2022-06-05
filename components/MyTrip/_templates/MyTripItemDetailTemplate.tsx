@@ -66,7 +66,6 @@ const MyTripItemDetailTemplate = () => {
             width="100%"
             textAlign="center"
             fontSize="lg"
-            textColor="primary"
             bold
           >
             ₩ {numberWithCommas(itemInfo.cost)}
@@ -92,6 +91,6 @@ const ItemScrollWrapper = styled(Flex)`
 `;
 
 const CostWrapper = styled(Span)`
-  border-top: solid 1px ${({ theme }) => theme.colors.primary}50;
+  border-top: solid 1px ${({ theme }) => theme.colors.white}30;
   padding-top: 8px;
 `;

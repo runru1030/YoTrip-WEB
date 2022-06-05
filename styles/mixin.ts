@@ -24,7 +24,7 @@ export const ShadowRound = ({
   blurRadius = "10px",
   spread = "0px",
   color = "#00000010",
-  borderRadius = "8px",
+  borderRadius = "16px",
 }) => css`
   box-shadow: ${x} ${y} ${blurRadius} ${spread} ${color};
   border-radius: ${borderRadius};

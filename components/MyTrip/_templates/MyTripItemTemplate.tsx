@@ -12,6 +12,10 @@ import { MainWrapper, ShadowRound } from "styles/mixin";
 import { numberWithCommas } from "utils/function";
 import Header from "../../_templates/Header";
 import TripInfoContainer from "../_molecules/TripInfoContainer";
+import useModal from "hooks/useModal";
+import PortalModal from "components/_molecules/PortalModal";
+import Input from "components/_atoms/Input";
+import Button from "components/_atoms/Button";
 
 const MyTripItemTemplate = () => {
   const router = useRouter();
@@ -37,6 +41,7 @@ const MyTripItemTemplate = () => {
         return <Span bold>{title}</Span>;
     }
   };
+  const { openModal, closeModal, isModalOpen } = useModal({});
   return (
     <>
       <Header />
@@ -56,11 +61,33 @@ const MyTripItemTemplate = () => {
               </Span>
             </ItemWrapper>
           ))}
-          <ItemAddWrapper dir="column" centerVH gap="8px">
+          <ItemAddWrapper dir="column" centerVH gap="8px" onClick={openModal}>
             <AddIcon />
           </ItemAddWrapper>
         </ItemContainer>
       </MainScrollWrapper>
+      <PortalModal
+        {...{ closeModal, isModalOpen }}
+        isWithClosedButton
+        padding="16px"
+        width="90%"
+        maxWidth="350px"
+      >
+        <Flex dir="column" gap="24px" padding="16px" width="100%">
+          <Span bold fontSize="md">
+            비용 항목 추가
+          </Span>
+          <Input
+            type="text"
+            inputType="primaryDark"
+            placeholder="항목 이름"
+            borderRadius="12px"
+          ></Input>
+          <Button padding="16px" borderRadius="12px">
+            추가
+          </Button>
+        </Flex>
+      </PortalModal>
     </>
   );
 };
