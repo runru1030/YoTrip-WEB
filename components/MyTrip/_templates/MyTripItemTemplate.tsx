@@ -44,7 +44,6 @@ const MyTripItemTemplate = () => {
   const { openModal, closeModal, isModalOpen } = useModal({});
   return (
     <>
-      <Header />
       <MainScrollWrapper dir="column">
         <TripInfoContainer />
         <ItemContainer columnCount={3} gridGap="16px" margin="16px">

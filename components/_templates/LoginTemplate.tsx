@@ -9,14 +9,17 @@ import Span from "components/_atoms/Span";
 import Flex from "components/_atoms/Flex";
 import Button from "components/_atoms/Button";
 import { useRouter } from "next/router";
+import { useAuth } from "modules/AuthProvider";
 const LoginTemplate = () => {
   const router = useRouter();
+  const { signInGoogle } = useAuth();
   const handleClickLogin = (e: React.MouseEvent) => {
-    const { type } = (e.target as HTMLButtonElement).dataset;
+    const { type } = (e.currentTarget as HTMLButtonElement).dataset;
     switch (type) {
       case "kakao":
       case "google":
-        router.push("/main");
+        signInGoogle();
+        // router.push("/");
         break;
 
       default:

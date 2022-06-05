@@ -42,7 +42,6 @@ const MainTemplate = () => {
   };
   return (
     <>
-      <Header />
       <MainScrollWrapper dir="column">
         <Grid columnCount={2} gridGap="10px">
           {tripInfoList.map((tripInfo) => (

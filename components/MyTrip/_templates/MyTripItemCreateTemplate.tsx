@@ -36,7 +36,6 @@ const MyTripItemCreateTemplate = () => {
   };
   return (
     <>
-      <Header />
       <MainScrollWrapper dir="column">
         <TripInfoContainer />
         <MainCardWrapper dir="column" padding="16px" gap="24px" margin="16px">

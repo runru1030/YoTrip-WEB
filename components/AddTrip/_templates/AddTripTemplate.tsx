@@ -6,14 +6,14 @@ import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
 import {
   selectTripCreationState,
-  setTripInfo
+  setTripInfo,
 } from "modules/slices/tripCreationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DarkCardWrapper,
   MainCardWrapper,
   MainWrapper,
-  ShadowRound
+  ShadowRound,
 } from "styles/mixin";
 import BottomBar from "../../_templates/BottomBar";
 import Header from "../../_templates/Header";
@@ -48,7 +48,6 @@ const AddTripTemplate = () => {
   };
   return (
     <>
-      <Header />
       <MainScrollWrapper dir="column" gap="20px">
         <MainCardWrapper dir="column" gap="16px">
           <Input

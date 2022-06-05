@@ -33,7 +33,6 @@ const MyTripItemDetailTemplate = () => {
   };
   return (
     <>
-      <Header />
       <MainScrollWrapper dir="column">
         <TripInfoContainer />
         <MainCardWrapper dir="column" padding="16px" gap="24px" margin="16px">
@@ -62,12 +61,7 @@ const MyTripItemDetailTemplate = () => {
               </Flex>
             ))}
           </ItemScrollWrapper>
-          <CostWrapper
-            width="100%"
-            textAlign="center"
-            fontSize="lg"
-            bold
-          >
+          <CostWrapper width="100%" textAlign="center" fontSize="lg" bold>
             ₩ {numberWithCommas(itemInfo.cost)}
           </CostWrapper>
         </MainCardWrapper>

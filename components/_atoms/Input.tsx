@@ -92,7 +92,7 @@ const StyledInput = styled.input<IInputProps>`
   &.error {
     color: ${({ theme }) => theme.colors.negative};
     background-color: ${({ theme }) => theme.colors.errorBg};
-    border-color: ${({ theme }) => theme.colors.errorBorder};
+    border: 1px solid ${({ theme }) => theme.colors.errorBorder};
   }
   &.valid {
     border-color: ${({ theme }) => theme.colors.primaryRegular_400};
