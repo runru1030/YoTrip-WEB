@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ICountry } from "public/Country";
 import { RootState } from "../store";
 
-interface ICountryInfo {
+export interface ICountryInfo {
   name: string;
   detail: string;
 }
-interface ICountryTotalInfo extends ICountryInfo {
+export interface ICountryTotalInfo extends ICountryInfo {
   startDate: Date;
   endDate: Date;
 }
@@ -57,6 +57,12 @@ const tripCreationSlice = createSlice({
     addTripCountry(state, { payload }) {
       state.tripInfo.countries.push({ ...state.countryInfo, ...payload });
     },
+    delTripCountry(state, { payload }) {
+      const { countryInfo } = payload;
+      state.tripInfo.countries = state.tripInfo.countries.filter(
+        (country) => JSON.stringify(country) !== JSON.stringify(countryInfo)
+      );
+    },
     initCountryInfo(state) {
       state.countryInfo = initialState.countryInfo;
       state.countryResult = [];
@@ -68,8 +74,13 @@ const tripCreationSlice = createSlice({
   // extraReducers: (builder) => {},
 });
 
-export const { setTripInfo, setStatus, initCountryInfo, addTripCountry } =
-  tripCreationSlice.actions;
+export const {
+  setTripInfo,
+  setStatus,
+  initCountryInfo,
+  addTripCountry,
+  delTripCountry,
+} = tripCreationSlice.actions;
 export const selectTripCreationState = (state: RootState) =>
   state.tripInfoReducer;
 

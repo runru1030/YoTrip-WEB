@@ -3,6 +3,9 @@ import Button from "components/_atoms/Button";
 import Flex from "components/_atoms/Flex";
 import Span from "components/_atoms/Span";
 import {
+  delTripCountry,
+  ICountryInfo,
+  ICountryTotalInfo,
   selectTripCreationState,
   setStatus,
 } from "modules/slices/tripCreationSlice";
@@ -11,16 +14,26 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { useDispatch, useSelector } from "react-redux";
 import { DarkCardWrapper, MainCardWrapper } from "styles/mixin";
 import { dateFormater } from "utils/function";
+import DoDisturbOnOutlinedIcon from "@mui/icons-material/DoDisturbOnOutlined";
+import styled from "styled-components";
 
 const TripConfirmCreation = () => {
   const { tripInfo } = useSelector(selectTripCreationState);
   const dispatch = useDispatch();
+  const handleClickDel = (countryInfo: ICountryTotalInfo) => {
+    if (tripInfo.countries.length === 1) {
+      dispatch(delTripCountry({ countryInfo }));
+      dispatch(setStatus("country"));
+    } else {
+      dispatch(delTripCountry({ countryInfo }));
+    }
+  };
   return (
     <MainCardWrapper dir="column" gap="16px">
       <Span bold>트립 여정</Span>
-      {tripInfo.countries.map((country) => (
+      {tripInfo.countries.map((country, idx) => (
         <DarkCardWrapper
-          key={country.name}
+          key={country.name + country.detail + idx}
           dir="column"
           gap="10px"
           padding="10px"
@@ -29,11 +42,17 @@ const TripConfirmCreation = () => {
             <Span bold fontSize="md">
               {country.name}
             </Span>
-            <Span textColor="gray300" fontWeight="light">
-              {dateFormater(country.startDate)} -{dateFormater(country.endDate)}
+            <Span textColor="gray300" fontWeight="semiBold" fontSize="sm">
+              {dateFormater(country.startDate)} -{" "}
+              {dateFormater(country.endDate)}
             </Span>
           </Flex>
-          <Span fontWeight="light">{country.detail}</Span>
+          <Flex spaceBetween>
+            <Span fontWeight="light">{country.detail}</Span>
+            <DelButton btnType="unset" onClick={() => handleClickDel(country)}>
+              <DoDisturbOnOutlinedIcon sx={{ fontSize: "16px" }} />
+            </DelButton>
+          </Flex>
         </DarkCardWrapper>
       ))}
       <Button
@@ -49,3 +68,9 @@ const TripConfirmCreation = () => {
 };
 
 export default TripConfirmCreation;
+const DelButton = styled(Button)`
+  svg {
+    fill: ${({ theme }) => theme.colors.gray300};
+  }
+  padding: 0;
+`;
