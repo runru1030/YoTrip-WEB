@@ -1,5 +1,9 @@
 import React from "react";
-import styled, { css, T_BUTTON_TYPE_SCHEME } from "styled-components";
+import styled, {
+  css,
+  T_BUTTON_TYPE_SCHEME,
+  T_FONT_SIZE,
+} from "styled-components";
 
 export interface IButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   onClick?: (params: any) => void;
@@ -7,6 +11,7 @@ export interface IButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   focused?: boolean;
   borderRadius?: string;
   btnType?: T_BUTTON_TYPE_SCHEME;
+  fontSize?: T_FONT_SIZE;
   id?: string;
   width?: string;
   height?: string;
@@ -20,6 +25,7 @@ const Button: React.FC<IButtonProps> = ({
   borderRadius,
   focused = false,
   btnType = "primary",
+  fontSize = "nm",
   id,
   width,
   height,
@@ -39,6 +45,7 @@ const Button: React.FC<IButtonProps> = ({
         width,
         height,
         padding,
+        fontSize,
       }}
       {...restProps}
     >
@@ -57,6 +64,7 @@ const StyledButton = styled.button<IButtonProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding: ${(props) => props.padding};
+  font-size: ${({ fontSize, theme }) => theme.fontSize[fontSize!]};
   background-color: ${(props) => props.theme.btnType[props.btnType!].bgColor};
   border: unset;
   transition: 0.2s;
