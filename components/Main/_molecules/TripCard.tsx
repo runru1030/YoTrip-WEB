@@ -4,8 +4,10 @@ import styled from "styled-components";
 import Flex from "components/_atoms/Flex";
 import Profile from "../../_molecules/Profile";
 import { numberWithCommas } from "utils/function";
+import { useRouter } from "next/router";
 interface IProps {
   tripInfo: {
+    id: number;
     title: string;
     startDate: string;
     endDate: string;
@@ -14,8 +16,12 @@ interface IProps {
   };
 }
 const TripCard = ({ tripInfo }: IProps) => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push(`/myTrip/${tripInfo.id}/item`);
+  };
   return (
-    <Wrapper dir="column" spaceBetween shadow vAlign>
+    <Wrapper dir="column" spaceBetween shadow vAlign onClick={handleClick}>
       <Span fontSize="md" fontWeight="semiBold">
         {tripInfo.title}
       </Span>

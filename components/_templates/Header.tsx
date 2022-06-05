@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import LogoIcon from "public/images/logo_sm.svg";
+import { useRouter } from "next/router";
 const Header = () => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/main");
+  };
   return (
     <Head>
-      <LogoIcon />
+      <LogoIcon onClick={handleClick} />
     </Head>
   );
 };

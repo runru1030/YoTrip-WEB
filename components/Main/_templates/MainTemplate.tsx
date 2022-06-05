@@ -1,20 +1,19 @@
+import AddIcon from "@mui/icons-material/Add";
+import TripCard from "components/Main/_molecules/TripCard";
+import Button from "components/_atoms/Button";
+import Grid from "components/_atoms/Grid";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-
 import { MainWrapper, ShadowRound } from "styles/mixin";
-import Span from "components/_atoms/Span";
-import Flex from "components/_atoms/Flex";
-import Button from "components/_atoms/Button";
-import { useRouter } from "next/router";
-import Header from "../../_templates/Header";
-import TripCard from "components/Main/_molecules/TripCard";
-import Grid from "components/_atoms/Grid";
-import AddIcon from "@mui/icons-material/Add";
 import BottomBar from "../../_templates/BottomBar";
+import Header from "../../_templates/Header";
+
 const MainTemplate = () => {
   const router = useRouter();
   const tripInfoList = [
     {
+      id: 1,
       title: "캐나다 여행기",
       startDate: "22.02.02",
       endDate: "22.02.02",
@@ -22,6 +21,7 @@ const MainTemplate = () => {
       cost: 30000,
     },
     {
+      id: 2,
       title: "캐나다 여행기",
       startDate: "22.02.02",
       endDate: "22.02.02",
@@ -29,6 +29,7 @@ const MainTemplate = () => {
       cost: 30000,
     },
     {
+      id: 3,
       title: "캐나다 여행기",
       startDate: "22.02.02",
       endDate: "22.02.02",

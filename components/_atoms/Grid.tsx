@@ -44,4 +44,6 @@ const GridView = styled.div<IProps>`
   grid-gap: ${({ gridGap }) => gridGap};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  margin: ${({ margin }) => margin};
+  padding: ${({ padding }) => padding};
 `;
