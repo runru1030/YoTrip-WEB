@@ -27,6 +27,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
+import axios from "axios";
 
 const AuthContext = createContext<any>({});
 
@@ -40,6 +41,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        const idToken = await user.getIdToken();
+        await axios.post("/api/auth/login", { idToken });
+
         const dbUser: any = await getDoc(doc(db, "User", user.uid));
         if (!dbUser.data()) {
           /* 새 사용자 */

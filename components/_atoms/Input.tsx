@@ -30,6 +30,7 @@ export interface IInputProps extends IStyleProps {
   autoComplete?: string;
   inputType?: T_INPUT_TYPE_SCHEME;
   isBorder?: boolean;
+  required?: boolean;
 }
 
 const Input = ({
@@ -45,11 +46,12 @@ const Input = ({
   max,
   autoComplete = "on",
   isBorder = false,
+  required,
   ...resParams
 }: IInputProps) => {
   return (
     <StyledInput
-      className={isValid ? "valid" : "error"}
+      className={isValid || isValid === undefined ? "valid" : "error"}
       {...{
         inputType,
         accept,
@@ -60,6 +62,7 @@ const Input = ({
         max,
         autoComplete,
         isBorder,
+        required,
       }}
       {...resParams}
     ></StyledInput>

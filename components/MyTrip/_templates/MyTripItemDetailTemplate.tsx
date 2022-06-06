@@ -19,14 +19,14 @@ const MyTripItemDetailTemplate = () => {
     list: [
       {
         title: "캐나다",
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: "new Date(),",
+        endDate: "new Date(),",
         cost: 300,
       },
       {
         title: "캐나다",
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: "new Date(),",
+        endDate: "new Date(),",
         cost: 300,
       },
     ],

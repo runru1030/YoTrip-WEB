@@ -21,9 +21,25 @@ import TripConfirmCreation from "../_molecules/TripConfirmCreation";
 import TripCountryCreation from "../_molecules/TripCountryCreation";
 import TripDateCreation from "../_molecules/TripDateCreation";
 import TripDetailCreation from "../_molecules/TripDetailCreation";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
+import { auth, db } from "utils/firebase/app";
+import { selectUserInfoState } from "modules/slices/userSlice";
+import { useRouter } from "next/router";
 
 const AddTripTemplate = () => {
   const { tripInfo, tripCreationSatus } = useSelector(selectTripCreationState);
+  const { userInfo } = useSelector(selectUserInfoState);
+  const router = useRouter();
 
   const [mateNickname, setMateNickname] = useState("");
   const dispatch = useDispatch();
@@ -46,6 +62,19 @@ const AddTripTemplate = () => {
     date: <TripDateCreation />,
     confirm: <TripConfirmCreation />,
   };
+  const handleSubmit = async () => {
+    try {
+      if (tripInfo.countries.length === 0)
+        throw new Error("트립 국가를 추가해주세요.");
+      await addDoc(collection(db, "Trip", userInfo.uid, "myTripInfo"), {
+        ...tripInfo,
+        createdAt: serverTimestamp(),
+      }).then(() => router.push("/main"));
+    } catch (error: any) {
+      alert(error.message);
+      console.error(error);
+    }
+  };
   return (
     <>
       <MainScrollWrapper dir="column" gap="20px">
@@ -57,6 +86,7 @@ const AddTripTemplate = () => {
             id="title"
             value={tripInfo.title}
             onChange={handleChangeInput}
+            required
           ></Input>
         </MainCardWrapper>
         <MainCardWrapper dir="column" gap="16px">
@@ -76,7 +106,12 @@ const AddTripTemplate = () => {
         </MainCardWrapper>
       </MainScrollWrapper>
       <BottomBar>
-        <AddButton width="100%" borderRadius="8px" padding="10px">
+        <AddButton
+          width="100%"
+          borderRadius="8px"
+          padding="10px"
+          onClick={handleSubmit}
+        >
           트립 추가하기
         </AddButton>
       </BottomBar>

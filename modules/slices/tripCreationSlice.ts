@@ -7,12 +7,13 @@ export interface ICountryInfo {
   detail: string;
 }
 export interface ICountryTotalInfo extends ICountryInfo {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 }
-interface ITripInfo {
+export interface ITripInfo {
   title: string;
   countries: ICountryTotalInfo[];
+  cost: number;
   mateList: number[];
 }
 export type T_TRIP_CREATE_STATUS = "country" | "detail" | "date" | "confirm";
@@ -27,6 +28,7 @@ const initialState: ItripCreationState = {
     title: "",
     countries: [],
     mateList: [],
+    cost: 0,
   },
   countryInfo: {
     name: "",

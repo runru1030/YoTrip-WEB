@@ -34,7 +34,7 @@ const TripCountryCreation = () => {
           country.code_kr.includes(countryName)
         );
         setResultCountries(resultCountries);
-      }, 1000),
+      }, 500),
     []
   );
   return (

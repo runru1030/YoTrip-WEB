@@ -3,7 +3,7 @@ import { MainCardWrapper } from "styles/mixin";
 import styled from "styled-components";
 import Flex from "components/_atoms/Flex";
 import Profile from "../../_molecules/Profile";
-import { numberWithCommas } from "utils/function";
+import { dateFormater, numberWithCommas } from "utils/function";
 import { useRouter } from "next/router";
 interface IProps {
   tripInfo: {
@@ -20,14 +20,16 @@ const TripCard = ({ tripInfo }: IProps) => {
   const handleClick = () => {
     router.push(`/myTrip/${tripInfo.id}/item`);
   };
+  console.log(tripInfo);
+  
   return (
     <Wrapper dir="column" spaceBetween shadow vAlign onClick={handleClick}>
       <Span fontSize="md" fontWeight="semiBold">
         {tripInfo.title}
       </Span>
-      <Span fontSize="sm" textColor="gray300" fontWeight="semiBold">
-        {tripInfo.startDate} - {tripInfo.endDate}
-      </Span>
+      {/* <Span fontSize="sm" textColor="gray300" fontWeight="semiBold">
+        {dateFormater(tripInfo.startDate)} - {dateFormater(tripInfo.endDate)}
+      </Span> */}
       <Flex gap="10px">
         {tripInfo.mateList.map((mate) => (
           <Profile profileUrl={mate.profileUrl} />

@@ -2,41 +2,43 @@ import AddIcon from "@mui/icons-material/Add";
 import TripCard from "components/Main/_molecules/TripCard";
 import Button from "components/_atoms/Button";
 import Grid from "components/_atoms/Grid";
+import {
+  collection,
+  doc,
+  DocumentData,
+  DocumentReference,
+  DocumentSnapshot,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  where,
+} from "firebase/firestore";
+import { ITripInfo } from "modules/slices/tripCreationSlice";
+import { selectUserInfoState } from "modules/slices/userSlice";
+import wrapper from "modules/store";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { MainWrapper, ShadowRound } from "styles/mixin";
+import { db } from "utils/firebase/app";
 import BottomBar from "../../_templates/BottomBar";
 import Header from "../../_templates/Header";
-
-const MainTemplate = () => {
+interface IProps {
+  resultProps: any;
+}
+const MainTemplate: React.FC<IProps> = ({ resultProps }) => {
+  useEffect(() => {
+    console.log(resultProps);
+  }, []);
   const router = useRouter();
-  const tripInfoList = [
-    {
-      id: 1,
-      title: "캐나다 여행기",
-      startDate: "22.02.02",
-      endDate: "22.02.02",
-      mateList: [1, 2, 3],
-      cost: 30000,
-    },
-    {
-      id: 2,
-      title: "캐나다 여행기",
-      startDate: "22.02.02",
-      endDate: "22.02.02",
-      mateList: [1, 2, 3],
-      cost: 30000,
-    },
-    {
-      id: 3,
-      title: "캐나다 여행기",
-      startDate: "22.02.02",
-      endDate: "22.02.02",
-      mateList: [1, 2, 3],
-      cost: 30000,
-    },
-  ];
+  const { userInfo } = useSelector(selectUserInfoState);
+  const [tripInfoList, setTripInfoList] = useState<any[]>(resultProps);
+
   const handleClickAdd = () => {
     router.push("/addTrip");
   };
@@ -44,8 +46,8 @@ const MainTemplate = () => {
     <>
       <MainScrollWrapper dir="column">
         <Grid columnCount={2} gridGap="10px">
-          {tripInfoList.map((tripInfo) => (
-            <TripCard {...{ tripInfo }} key={`trip-${tripInfo.title}`} />
+          {tripInfoList?.map((tripInfo: any) => (
+            <TripCard tripInfo={tripInfo} key={tripInfo.id} />
           ))}
         </Grid>
       </MainScrollWrapper>

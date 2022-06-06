@@ -9,8 +9,8 @@ import { dateFormater, numberWithCommas } from "utils/function";
 const TripInfoContainer = () => {
   const myTripInfo = {
     title: "캐나다 여행기",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: "new Date()",
+    endDate: "new Date()",
     mateList: [1, 2, 3],
     cost: 30000,
     items: [
