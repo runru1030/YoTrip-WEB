@@ -1,40 +1,32 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-
 import Button from "components/_atoms/Button";
 import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
 import {
+  addDoc,
+  collection, serverTimestamp
+} from "firebase/firestore";
+import {
   selectTripCreationState,
-  setTripInfo,
+  setTripInfo
 } from "modules/slices/tripCreationSlice";
+import { selectUserInfoState } from "modules/slices/userSlice";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import {
   DarkCardWrapper,
   MainCardWrapper,
   MainWrapper,
-  ShadowRound,
+  ShadowRound
 } from "styles/mixin";
+import { db } from "utils/firebase/app";
 import BottomBar from "../../_templates/BottomBar";
-import Header from "../../_templates/Header";
 import TripConfirmCreation from "../_molecules/TripConfirmCreation";
 import TripCountryCreation from "../_molecules/TripCountryCreation";
 import TripDateCreation from "../_molecules/TripDateCreation";
 import TripDetailCreation from "../_molecules/TripDetailCreation";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  serverTimestamp,
-  setDoc,
-  where,
-} from "firebase/firestore";
-import { auth, db } from "utils/firebase/app";
-import { selectUserInfoState } from "modules/slices/userSlice";
-import { useRouter } from "next/router";
+
 
 const AddTripTemplate = () => {
   const { tripInfo, tripCreationSatus } = useSelector(selectTripCreationState);
@@ -66,10 +58,46 @@ const AddTripTemplate = () => {
     try {
       if (tripInfo.countries.length === 0)
         throw new Error("트립 국가를 추가해주세요.");
-      await addDoc(collection(db, "Trip", userInfo.uid, "myTripInfo"), {
-        ...tripInfo,
-        createdAt: serverTimestamp(),
-      }).then(() => router.push("/main"));
+
+      const minStart = tripInfo.countries.reduce(function (prev, current) {
+        console.log(prev.startDate, current.startDate);
+
+        return prev.startDate < current.startDate ? prev : current;
+      });
+      const maxEnd = tripInfo.countries.reduce(function (prev, current) {
+        return prev.endDate > current.endDate ? prev : current;
+      });
+      const docRef = await addDoc(
+        collection(db, "Trip", userInfo.uid, "myTripInfo"),
+        {
+          ...tripInfo,
+          startDate: minStart.startDate,
+          endDate: maxEnd.endDate,
+          createdAt: serverTimestamp(),
+        }
+      );
+      await addDoc(
+        collection(
+          db,
+          "Trip",
+          userInfo.uid,
+          "myTripInfo",
+          docRef.id,
+          "tripItems"
+        ),
+        { title: "숙소", cost: 0 }
+      );
+      await addDoc(
+        collection(
+          db,
+          "Trip",
+          userInfo.uid,
+          "myTripInfo",
+          docRef.id,
+          "tripItems"
+        ),
+        { title: "항공", cost: 0 }
+      ).then(() => router.push("/main"));
     } catch (error: any) {
       alert(error.message);
       console.error(error);

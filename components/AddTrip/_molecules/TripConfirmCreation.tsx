@@ -13,7 +13,7 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { useDispatch, useSelector } from "react-redux";
 import { DarkCardWrapper, MainCardWrapper } from "styles/mixin";
-import { dateFormater } from "utils/function";
+import { timeStampFormater } from "utils/function";
 import DoDisturbOnOutlinedIcon from "@mui/icons-material/DoDisturbOnOutlined";
 import styled from "styled-components";
 
@@ -43,8 +43,8 @@ const TripConfirmCreation = () => {
               {country.name}
             </Span>
             <Span textColor="gray300" fontWeight="semiBold" fontSize="sm">
-              {dateFormater(country.startDate)} -{" "}
-              {dateFormater(country.endDate)}
+              {timeStampFormater(country.startDate)} -{" "}
+              {timeStampFormater(country.endDate)}
             </Span>
           </Flex>
           <Flex spaceBetween>

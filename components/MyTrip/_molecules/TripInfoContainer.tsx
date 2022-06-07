@@ -4,20 +4,12 @@ import styled from "styled-components";
 import Flex from "components/_atoms/Flex";
 import Span from "components/_atoms/Span";
 import Profile from "components/_molecules/Profile";
-import { dateFormater, numberWithCommas } from "utils/function";
-
-const TripInfoContainer = () => {
-  const myTripInfo = {
-    title: "캐나다 여행기",
-    startDate: "new Date()",
-    endDate: "new Date()",
-    mateList: [1, 2, 3],
-    cost: 30000,
-    items: [
-      { id: 1, title: "숙소", cost: 2000 },
-      { id: 2, title: "항공", cost: 1000 },
-    ],
-  };
+import { timeStampFormater, numberWithCommas } from "utils/function";
+import { ITripInfo } from "modules/slices/tripCreationSlice";
+interface IProps {
+  myTripInfo: ITripInfo;
+}
+const TripInfoContainer = ({ myTripInfo }: IProps) => {
   return (
     <Flex dir="column" gap="16px">
       <Flex spaceBetween>
@@ -25,8 +17,8 @@ const TripInfoContainer = () => {
           {myTripInfo.title}
         </Span>
         <Span textColor="gray300" fontWeight="semiBold" fontSize="sm">
-          {dateFormater(myTripInfo.startDate)} -
-          {dateFormater(myTripInfo.endDate)}
+          {timeStampFormater(myTripInfo.startDate)} -
+          {timeStampFormater(myTripInfo.endDate)}
         </Span>
       </Flex>
       <Flex gap="10px">

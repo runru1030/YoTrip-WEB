@@ -6,7 +6,7 @@ import Flex from "components/_atoms/Flex";
 import Span from "components/_atoms/Span";
 import { useRouter } from "next/router";
 import { MainCardWrapper, MainWrapper } from "styles/mixin";
-import { dateFormater, numberWithCommas } from "utils/function";
+import { timeStampFormater, numberWithCommas } from "utils/function";
 import Header from "../../_templates/Header";
 import TripInfoContainer from "../_molecules/TripInfoContainer";
 
@@ -34,7 +34,7 @@ const MyTripItemDetailTemplate = () => {
   return (
     <>
       <MainScrollWrapper dir="column">
-        <TripInfoContainer />
+        <TripInfoContainer {...{ myTripInfo }} />
         <MainCardWrapper dir="column" padding="16px" gap="24px" margin="16px">
           <Flex spaceBetween vAlign>
             <Span bold fontSize="md">
@@ -52,7 +52,8 @@ const MyTripItemDetailTemplate = () => {
                 <Flex spaceBetween vAlign>
                   <Span fontWeight="xBold">{li.title}</Span>
                   <Span textColor="gray300" fontWeight="semiBold" fontSize="sm">
-                    {dateFormater(li.startDate)} -{dateFormater(li.endDate)}
+                    {timeStampFormater(li.startDate)} -
+                    {timeStampFormater(li.endDate)}
                   </Span>
                 </Flex>
                 <Span fontWeight="thin" fontSize="sm">

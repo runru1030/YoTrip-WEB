@@ -21,7 +21,7 @@ export const getServerSideProps = withIronSessionSsr(
     const user = (req.session as any).token;
     let resultProps: any[] = [];
     await getDocs(collection(db, "Trip", user, "myTripInfo")).then((res) => {
-      resultProps = res.docs.map((doc) => doc.data());
+      resultProps = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     });
 
     return {

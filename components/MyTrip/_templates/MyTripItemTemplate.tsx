@@ -16,20 +16,12 @@ import useModal from "hooks/useModal";
 import PortalModal from "components/_molecules/PortalModal";
 import Input from "components/_atoms/Input";
 import Button from "components/_atoms/Button";
+import { ITripInfo } from "modules/slices/tripCreationSlice";
+import { IItemProps } from "pages/myTrip/[tid]/item";
 
-const MyTripItemTemplate = () => {
+const MyTripItemTemplate = ({ myTripInfo, tripItems }: IItemProps) => {
   const router = useRouter();
-  const myTripInfo = {
-    title: "캐나다 여행기",
-    startDate: new Date(),
-    endDate: new Date(),
-    mateList: [1, 2, 3],
-    cost: 30000,
-    items: [
-      { id: 1, title: "숙소", cost: 2000 },
-      { id: 2, title: "항공", cost: 1000 },
-    ],
-  };
+  const { tid } = router.query;
 
   const convertItemTitles = (title: string) => {
     switch (title) {
@@ -45,14 +37,16 @@ const MyTripItemTemplate = () => {
   return (
     <>
       <MainScrollWrapper dir="column">
-        <TripInfoContainer />
+        <TripInfoContainer {...{ myTripInfo }} />
         <ItemContainer columnCount={3} gridGap="16px" margin="16px">
-          {myTripInfo.items.map((item) => (
+          {tripItems.map((item) => (
             <ItemWrapper
               dir="column"
               centerVH
               gap="8px"
-              onClick={() => router.push(`/myTrip/${1}/item/${item.id}/detail`)}
+              onClick={() =>
+                router.push(`/myTrip/${tid}/item/${item.id}/detail`)
+              }
             >
               {convertItemTitles(item.title)}
               <Span fontWeight="thin" textColor="gray300">
