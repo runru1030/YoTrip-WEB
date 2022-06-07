@@ -6,10 +6,12 @@ import Profile from "../../_molecules/Profile";
 import { timeStampFormater, numberWithCommas } from "utils/function";
 import { useRouter } from "next/router";
 import { Timestamp } from "firebase/firestore";
+import { ICountryInfo } from "modules/slices/tripCreationSlice";
 interface IProps {
   tripInfo: {
     id: number;
     title: string;
+    countries: ICountryInfo[];
     startDate: Timestamp;
     endDate: Timestamp;
     mateList: any[];
@@ -27,7 +29,12 @@ const TripCard = ({ tripInfo }: IProps) => {
       <Span fontSize="md" fontWeight="semiBold">
         {tripInfo.title}
       </Span>
-      <Span fontSize="sm" textColor="gray300" fontWeight="semiBold">
+      <Flex dir="row" gap="12px">
+        {tripInfo.countries.map((country) => (
+          <Span>{country.name}</Span>
+        ))}
+      </Flex>
+      <Span fontSize="sm" /*  textColor="gray300" */ fontWeight="thin">
         {timeStampFormater(tripInfo.startDate)} -{" "}
         {timeStampFormater(tripInfo.endDate)}
       </Span>
@@ -44,7 +51,8 @@ const TripCard = ({ tripInfo }: IProps) => {
 export default TripCard;
 const Wrapper = styled(MainCardWrapper)`
   height: 200px;
-  width: 170px;
+  /* width: 170px; */
+  width: 100%;
   padding: 20px;
   border-radius: 16px;
 `;

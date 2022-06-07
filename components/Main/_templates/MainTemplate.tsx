@@ -1,6 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import TripCard from "components/Main/_molecules/TripCard";
 import Button from "components/_atoms/Button";
+import Flex from "components/_atoms/Flex";
 import Grid from "components/_atoms/Grid";
 import {
   collection,
@@ -45,11 +46,16 @@ const MainTemplate: React.FC<IProps> = ({ resultProps }) => {
   return (
     <>
       <MainScrollWrapper dir="column">
-        <Grid columnCount={2} gridGap="10px">
+        {/* <Grid columnCount={2} gridGap="10px">
           {tripInfoList?.map((tripInfo: any) => (
             <TripCard tripInfo={tripInfo} key={tripInfo.id} />
           ))}
-        </Grid>
+        </Grid> */}
+        <Flex dir="column" gap="10px" width="90%">
+          {tripInfoList?.map((tripInfo: any) => (
+            <TripCard tripInfo={tripInfo} key={tripInfo.id} />
+          ))}
+        </Flex>
       </MainScrollWrapper>
       <BottomBar>
         <AddButton btnType="positive" onClick={handleClickAdd}>
@@ -63,6 +69,7 @@ const MainTemplate: React.FC<IProps> = ({ resultProps }) => {
 export default MainTemplate;
 const MainScrollWrapper = styled(MainWrapper)`
   max-height: calc(100vh - 50px - 94px);
+  margin-top: 24px;
   overflow: scroll;
 `;
 const AddButton = styled(Button)`
