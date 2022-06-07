@@ -1,24 +1,22 @@
 import Button from "components/_atoms/Button";
 import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {
-  addDoc,
-  collection, serverTimestamp
-} from "firebase/firestore";
-import {
+  initState,
   selectTripCreationState,
-  setTripInfo
+  setTripInfo,
 } from "modules/slices/tripCreationSlice";
 import { selectUserInfoState } from "modules/slices/userSlice";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   DarkCardWrapper,
   MainCardWrapper,
   MainWrapper,
-  ShadowRound
+  ShadowRound,
 } from "styles/mixin";
 import { db } from "utils/firebase/app";
 import BottomBar from "../../_templates/BottomBar";
@@ -26,7 +24,6 @@ import TripConfirmCreation from "../_molecules/TripConfirmCreation";
 import TripCountryCreation from "../_molecules/TripCountryCreation";
 import TripDateCreation from "../_molecules/TripDateCreation";
 import TripDetailCreation from "../_molecules/TripDetailCreation";
-
 
 const AddTripTemplate = () => {
   const { tripInfo, tripCreationSatus } = useSelector(selectTripCreationState);
@@ -47,6 +44,12 @@ const AddTripTemplate = () => {
         break;
     }
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(initState());
+    };
+  }, []);
 
   const TripInfoAddContent = {
     country: <TripCountryCreation />,

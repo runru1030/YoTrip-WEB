@@ -77,6 +77,12 @@ const tripCreationSlice = createSlice({
     setStatus(state, { payload }) {
       state.tripCreationSatus = payload;
     },
+    initState(state) {
+      state.tripInfo = initialState.tripInfo;
+      state.countryInfo = initialState.countryInfo;
+      state.tripCreationSatus = initialState.tripCreationSatus;
+      state.countryResult = initialState.countryResult;
+    },
   },
   // extraReducers: (builder) => {},
 });
@@ -87,6 +93,7 @@ export const {
   initCountryInfo,
   addTripCountry,
   delTripCountry,
+  initState,
 } = tripCreationSlice.actions;
 export const selectTripCreationState = (state: RootState) =>
   state.tripInfoReducer;
