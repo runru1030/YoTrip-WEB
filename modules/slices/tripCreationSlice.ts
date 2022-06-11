@@ -32,8 +32,8 @@ const initialState: ItripCreationState = {
     countries: [],
     mateList: [],
     cost: 0,
-    startDate: Timestamp.fromDate(new Date()),
-    endDate: Timestamp.fromDate(new Date()),
+    startDate: JSON.parse(JSON.stringify(Timestamp.fromDate(new Date()))),
+    endDate: JSON.parse(JSON.stringify(Timestamp.fromDate(new Date()))),
   },
   countryInfo: {
     name: "",

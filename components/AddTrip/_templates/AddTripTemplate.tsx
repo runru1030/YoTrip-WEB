@@ -3,9 +3,13 @@ import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {
+  ICountryInfo,
+  ICountryTotalInfo,
   initState,
+  ITripInfo,
   selectTripCreationState,
   setTripInfo,
+  T_TRIP_CREATE_STATUS,
 } from "modules/slices/tripCreationSlice";
 import { selectUserInfoState } from "modules/slices/userSlice";
 import { useRouter } from "next/router";
@@ -62,14 +66,16 @@ const AddTripTemplate = () => {
       if (tripInfo.countries.length === 0)
         throw new Error("트립 국가를 추가해주세요.");
 
-      const minStart = tripInfo.countries.reduce(function (prev, current) {
-        console.log(prev.startDate, current.startDate);
-
-        return prev.startDate < current.startDate ? prev : current;
-      });
-      const maxEnd = tripInfo.countries.reduce(function (prev, current) {
-        return prev.endDate > current.endDate ? prev : current;
-      });
+      const minStart = (tripInfo.countries as ICountryTotalInfo[]).reduce(
+        (prev, current) => {
+          return prev.startDate < current.startDate ? prev : current;
+        }
+      );
+      const maxEnd = (tripInfo.countries as ICountryTotalInfo[]).reduce(
+        (prev, current) => {
+          return prev.endDate > current.endDate ? prev : current;
+        }
+      );
       const docRef = await addDoc(
         collection(db, "Trip", userInfo.uid, "myTripInfo"),
         {
@@ -121,7 +127,7 @@ const AddTripTemplate = () => {
           ></Input>
         </MainCardWrapper>
         <MainCardWrapper dir="column" gap="16px">
-          {TripInfoAddContent[tripCreationSatus]}
+          {TripInfoAddContent[tripCreationSatus as T_TRIP_CREATE_STATUS]}
         </MainCardWrapper>
         <MainCardWrapper dir="column" gap="16px">
           <Span bold>트립 메이트</Span>

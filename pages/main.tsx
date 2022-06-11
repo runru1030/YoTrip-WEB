@@ -1,34 +1,33 @@
-import LoginTemplate from "components/_templates/LoginTemplate";
 import MainTemplate from "components/Main/_templates/MainTemplate";
-import React from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { ITripInfo } from "modules/slices/tripCreationSlice";
 import wrapper from "modules/store";
-import { collection, doc, getDocs, query } from "firebase/firestore";
+import cookies from "next-cookies";
+import React from "react";
 import { db } from "utils/firebase/app";
-import { ironOptions } from "lib/ironSessionConfig";
-import { withIronSessionSsr } from "iron-session/next";
-
 interface IProps {
-  resultProps: any;
+  myTrips: ITripInfo[];
 }
 
-const index = ({ resultProps }: IProps) => {
-  return <MainTemplate {...{ resultProps }} />;
+const index = ({ myTrips }: IProps) => {
+  return <MainTemplate {...{ myTrips }} />;
 };
 
 export default index;
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    const user = (req.session as any).token;
-    let resultProps: any[] = [];
-    await getDocs(collection(db, "Trip", user, "myTripInfo")).then((res) => {
-      resultProps = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    });
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (ctx) => {
+    const { uid } = cookies(ctx);
+    let myTrips: any[] = [];
+    if (uid) {
+      await getDocs(collection(db, "Trip", uid, "myTripInfo")).then((res) => {
+        myTrips = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      });
+    }
 
     return {
       props: {
-        resultProps: JSON.parse(JSON.stringify(resultProps)),
+        myTrips: JSON.parse(JSON.stringify(myTrips)),
       },
     };
-  },
-  ironOptions
+  }
 );

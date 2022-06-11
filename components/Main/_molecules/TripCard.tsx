@@ -7,6 +7,7 @@ import { timeStampFormater, numberWithCommas } from "utils/function";
 import { useRouter } from "next/router";
 import { Timestamp } from "firebase/firestore";
 import { ICountryInfo } from "modules/slices/tripCreationSlice";
+import { useDispatch } from "react-redux";
 interface IProps {
   tripInfo: {
     id: number;
@@ -20,6 +21,7 @@ interface IProps {
 }
 const TripCard = ({ tripInfo }: IProps) => {
   const router = useRouter();
+  const dispatch = useDispatch;
   const handleClick = () => {
     router.push(`/myTrip/${tripInfo.id}/item`);
   };

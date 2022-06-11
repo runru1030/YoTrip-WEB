@@ -1,27 +1,29 @@
-import React from "react";
-import styled from "styled-components";
-
 import AddIcon from "@mui/icons-material/Add";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import HotelIcon from "@mui/icons-material/Hotel";
+import Button from "components/_atoms/Button";
 import Flex from "components/_atoms/Flex";
 import Grid from "components/_atoms/Grid";
+import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
+import PortalModal from "components/_molecules/PortalModal";
+import useModal from "hooks/useModal";
+import {
+  ITripItemInfo,
+  selectMyTripItemState,
+} from "modules/slices/myTripItemSlice";
 import { useRouter } from "next/router";
+import React from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 import { MainWrapper, ShadowRound } from "styles/mixin";
 import { numberWithCommas } from "utils/function";
-import Header from "../../_templates/Header";
 import TripInfoContainer from "../_molecules/TripInfoContainer";
-import useModal from "hooks/useModal";
-import PortalModal from "components/_molecules/PortalModal";
-import Input from "components/_atoms/Input";
-import Button from "components/_atoms/Button";
-import { ITripInfo } from "modules/slices/tripCreationSlice";
-import { IItemProps } from "pages/myTrip/[tid]/item";
 
-const MyTripItemTemplate = ({ myTripInfo, tripItems }: IItemProps) => {
+const MyTripItemTemplate = ({}) => {
   const router = useRouter();
   const { tid } = router.query;
+  const { tripItems, myTripInfo } = useSelector(selectMyTripItemState);
 
   const convertItemTitles = (title: string) => {
     switch (title) {
@@ -39,7 +41,7 @@ const MyTripItemTemplate = ({ myTripInfo, tripItems }: IItemProps) => {
       <MainScrollWrapper dir="column">
         <TripInfoContainer {...{ myTripInfo }} />
         <ItemContainer columnCount={3} gridGap="16px" margin="16px">
-          {tripItems.map((item) => (
+          {tripItems.map((item: ITripItemInfo) => (
             <ItemWrapper
               dir="column"
               centerVH

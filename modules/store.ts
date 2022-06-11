@@ -1,10 +1,29 @@
-import { AnyAction, combineReducers, configureStore, ThunkDispatch } from "@reduxjs/toolkit";
-import { Context, createWrapper } from "next-redux-wrapper";
+import {
+  AnyAction,
+  combineReducers,
+  configureStore,
+  ThunkDispatch,
+} from "@reduxjs/toolkit";
+import { Context, createWrapper, HYDRATE } from "next-redux-wrapper";
 import tripInfoReducer from "./slices/tripCreationSlice";
 import userInfoReducer from "./slices/userSlice";
+import myTripItemInfoReducer from "./slices/myTripItemSlice";
 
 export const reducer = (state: any, action: any) => {
-  return combineReducers({ tripInfoReducer, userInfoReducer })(state, action);
+  switch (action.type) {
+    case HYDRATE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default: {
+      return combineReducers({
+        tripInfoReducer,
+        userInfoReducer,
+        myTripItemInfoReducer,
+      })(state, action);
+    }
+  }
 };
 
 const devMode = process.env.NODE_ENV === "development";

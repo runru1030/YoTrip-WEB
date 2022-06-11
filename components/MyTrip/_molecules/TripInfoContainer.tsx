@@ -1,15 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-
 import Flex from "components/_atoms/Flex";
 import Span from "components/_atoms/Span";
 import Profile from "components/_molecules/Profile";
-import { timeStampFormater, numberWithCommas } from "utils/function";
-import { ITripInfo } from "modules/slices/tripCreationSlice";
-interface IProps {
-  myTripInfo: ITripInfo;
-}
-const TripInfoContainer = ({ myTripInfo }: IProps) => {
+import { selectMyTripItemState } from "modules/slices/myTripItemSlice";
+import React from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+import { numberWithCommas, timeStampFormater } from "utils/function";
+
+interface IProps {}
+const TripInfoContainer = ({}: IProps) => {
+  const { myTripInfo } = useSelector(selectMyTripItemState);
   return (
     <Flex dir="column" gap="16px">
       <Flex spaceBetween>
@@ -22,7 +22,7 @@ const TripInfoContainer = ({ myTripInfo }: IProps) => {
         </Span>
       </Flex>
       <Flex gap="10px">
-        {myTripInfo.mateList.map((mate) => (
+        {myTripInfo.mateList.map((mate: any) => (
           <Profile
             /* profileUrl={mate.profileUrl} */ width="36px"
             height="36px"
