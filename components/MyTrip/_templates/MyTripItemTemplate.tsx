@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { MainWrapper, ShadowRound } from "styles/mixin";
 import { numberWithCommas } from "utils/function";
+import ItemCreationContent from "../modal/ItemCreationContent";
 import TripInfoContainer from "../_molecules/TripInfoContainer";
 
 const MyTripItemTemplate = ({}) => {
@@ -49,6 +50,8 @@ const MyTripItemTemplate = ({}) => {
               onClick={() =>
                 router.push(`/myTrip/${tid}/item/${item.id}/detail`)
               }
+              key={item.id}
+              height="70px"
             >
               {convertItemTitles(item.title)}
               <Span fontWeight="thin" textColor="gray300">
@@ -68,20 +71,7 @@ const MyTripItemTemplate = ({}) => {
         width="90%"
         maxWidth="350px"
       >
-        <Flex dir="column" gap="24px" padding="16px" width="100%">
-          <Span bold fontSize="md">
-            비용 항목 추가
-          </Span>
-          <Input
-            type="text"
-            inputType="primaryDark"
-            placeholder="항목 이름"
-            borderRadius="12px"
-          ></Input>
-          <Button padding="16px" borderRadius="12px">
-            추가
-          </Button>
-        </Flex>
+        <ItemCreationContent />
       </PortalModal>
     </>
   );
@@ -100,7 +90,8 @@ const ItemWrapper = styled(Flex)`
   background-color: ${({ theme }) => theme.colors.gray200};
   padding: 12px;
   font-size: 12px;
-  ${ShadowRound({ x: "10px", y: "10", borderRadius: "16px" })}
+  ${ShadowRound({ x: "10px", y: "10", borderRadius: "16px" })};
+  height: 70px;
 `;
 const ItemAddWrapper = styled(Flex)`
   background-color: ${({ theme }) => theme.colors.gray100};
@@ -110,6 +101,7 @@ const ItemAddWrapper = styled(Flex)`
   svg {
     fill: ${({ theme }) => theme.colors.gray300};
   }
+  height: 70px;
 `;
 
 const ItemContainer = styled(Grid)`
