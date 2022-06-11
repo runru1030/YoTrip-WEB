@@ -7,13 +7,14 @@ import {
   getMyTripItemsInfo,
 } from "modules/slices/myTripItemSlice";
 import { ITripInfo } from "modules/slices/tripCreationSlice";
-import { selectUserInfoState } from "modules/slices/userSlice";
+import { selectUserInfoState, setLoggedIn } from "modules/slices/userSlice";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "utils/firebase/app";
 import cookies from "next-cookies";
 import wrapper from "modules/store";
+import { firebaseAuth } from "utils/firebaseAdmin/app";
 
 export interface IItemProps {
   myTripInfo: ITripInfo;
@@ -43,6 +44,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { uid } = cookies(ctx);
     const { tid } = ctx.query;
     if (uid && tid) {
+      await firebaseAuth.getUser(uid).then(() => {
+        store.dispatch(setLoggedIn({}));
+      });
       await store.dispatch(getMyTripInfo({ uid, tid: tid as string }));
       await store.dispatch(getMyTripItemsInfo({ uid, tid: tid as string }));
     }

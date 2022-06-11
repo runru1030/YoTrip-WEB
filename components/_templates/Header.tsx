@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const Header = () => {
   const router = useRouter();
   const handleClick = () => {
-    router.push("/main");
+    router.push("/");
   };
   return (
     <Head>

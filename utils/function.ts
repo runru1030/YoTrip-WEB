@@ -16,3 +16,7 @@ export const timeStampFormater = (time: Timestamp) => {
 export const timeStampToDate = (time: Timestamp) => {
   return new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
 };
+
+export const jsonConverter = (data: any) => {
+  return JSON.parse(JSON.stringify(data));
+};

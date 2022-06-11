@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { serverTimestamp, Timestamp } from "firebase/firestore";
 import { ICountry } from "public/Country";
+import { jsonConverter } from "utils/function";
 import { RootState } from "../store";
 
 export interface ICountryInfo {
@@ -16,8 +17,8 @@ export interface ITripInfo {
   countries: ICountryTotalInfo[];
   cost: number;
   mateList: number[];
-  startDate: Timestamp;
-  endDate: Timestamp;
+  startDate: Timestamp | Date;
+  endDate: Timestamp | Date;
 }
 export type T_TRIP_CREATE_STATUS = "country" | "detail" | "date" | "confirm";
 interface ItripCreationState {
@@ -32,8 +33,8 @@ const initialState: ItripCreationState = {
     countries: [],
     mateList: [],
     cost: 0,
-    startDate: JSON.parse(JSON.stringify(Timestamp.fromDate(new Date()))),
-    endDate: JSON.parse(JSON.stringify(Timestamp.fromDate(new Date()))),
+    startDate: jsonConverter(new Date()),
+    endDate: jsonConverter(new Date()),
   },
   countryInfo: {
     name: "",

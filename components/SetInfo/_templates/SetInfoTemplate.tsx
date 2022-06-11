@@ -1,17 +1,17 @@
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+
 import Button from "components/_atoms/Button";
 import Flex from "components/_atoms/Flex";
 import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
-import { doc, updateDoc } from "firebase/firestore";
+import { updateUser } from "lib/apis/user";
 import { selectUserInfoState } from "modules/slices/userSlice";
 import { useRouter } from "next/router";
 import LogoIcon from "public/images/logo_sm.svg";
 import PeopleIcon from "public/images/people.svg";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import styled from "styled-components";
 import { MainWrapper } from "styles/mixin";
-import { db } from "utils/firebase/app";
 
 const SetInfoTemplate = () => {
   const { userInfo } = useSelector(selectUserInfoState);
@@ -33,12 +33,11 @@ const SetInfoTemplate = () => {
       if (error !== "" || nickname === "") {
         throw new Error(error);
       }
-      const userRef = doc(db, "User", userInfo.uid);
-      await updateDoc(userRef, {
-        nickname,
-      }).then((res) => {
-        router.push("/main");
-      });
+      await updateUser({ uid: userInfo.uid, updateInfo: { nickname } }).then(
+        () => {
+          router.push("/");
+        }
+      );
     } catch (error) {
       alert("닉네임 조건을 확인해주세요.");
     }

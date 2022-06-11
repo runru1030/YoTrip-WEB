@@ -3,7 +3,7 @@ import { RootState } from "../store";
 
 export interface IUserInfo {
   uid: string;
-  nickname: string;
+  nickname?: string;
 }
 interface IUserState {
   isLoggedIn: boolean;

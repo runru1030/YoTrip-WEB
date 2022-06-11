@@ -5,6 +5,7 @@ import wrapper from "modules/store";
 import cookies from "next-cookies";
 import React from "react";
 import { db } from "utils/firebase/app";
+import { jsonConverter } from "utils/function";
 interface IProps {
   myTrips: ITripInfo[];
 }
@@ -26,7 +27,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     return {
       props: {
-        myTrips: JSON.parse(JSON.stringify(myTrips)),
+        myTrips: jsonConverter(myTrips),
       },
     };
   }

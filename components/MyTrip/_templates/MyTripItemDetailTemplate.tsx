@@ -1,27 +1,22 @@
+import React from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+
 import AddIcon from "@mui/icons-material/Add";
+import SwipeToDelete from "components/react-swipe-to-delete-component/js/SwipeToDelete.jsx";
 import Flex from "components/_atoms/Flex";
 import Span from "components/_atoms/Span";
+import { Timestamp } from "firebase/firestore";
+import { deleteTripItemDetail } from "lib/services/trip";
 import {
   ITripItemDetailInfo,
   selectMyTripItemState,
 } from "modules/slices/myTripItemSlice";
+import { selectUserInfoState } from "modules/slices/userSlice";
 import { useRouter } from "next/router";
-import React from "react";
-import { useSelector } from "react-redux";
-import styled from "styled-components";
 import { MainCardWrapper, MainWrapper } from "styles/mixin";
 import { numberWithCommas, timeStampFormater } from "utils/function";
 import TripInfoContainer from "../_molecules/TripInfoContainer";
-import SwipeToDelete from "components/react-swipe-to-delete-component/js/SwipeToDelete.jsx";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  increment,
-  updateDoc,
-} from "firebase/firestore";
-import { selectUserInfoState } from "modules/slices/userSlice";
-import { db } from "utils/firebase/app";
 const MyTripItemDetailTemplate: React.FC = ({}) => {
   const router = useRouter();
   const { tid, id } = router.query as { tid: string; id: string };
@@ -29,30 +24,13 @@ const MyTripItemDetailTemplate: React.FC = ({}) => {
   const { currTripItem, itemDetails } = useSelector(selectMyTripItemState);
   const handleDelete = async (detailItem: ITripItemDetailInfo) => {
     try {
-      const detail = doc(
-        db,
-        "Trip",
-        userInfo.uid,
-        "myTripInfo",
+      await deleteTripItemDetail({
+        uid: userInfo.uid,
         tid,
-        "tripItems",
-        id,
-        "detail",
-        detailItem.id
-      );
-      await deleteDoc(detail);
-      const myTripRef = doc(db, "Trip", userInfo.uid, "myTripInfo", tid);
-      await updateDoc(myTripRef, { cost: increment(-detailItem.cost) });
-      const myTripItemRef = doc(
-        db,
-        "Trip",
-        userInfo.uid,
-        "myTripInfo",
-        tid,
-        "tripItems",
-        id
-      );
-      await updateDoc(myTripItemRef, { cost: increment(-detailItem.cost) });
+        itemId: id,
+        itemDetailId: detailItem.id as string,
+        cost: detailItem.cost,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -85,8 +63,8 @@ const MyTripItemDetailTemplate: React.FC = ({}) => {
                       fontWeight="semiBold"
                       fontSize="sm"
                     >
-                      {timeStampFormater(li.startDate)} -
-                      {timeStampFormater(li.endDate)}
+                      {timeStampFormater(li.startDate as Timestamp)} -
+                      {timeStampFormater(li.endDate as Timestamp)}
                     </Span>
                   </Flex>
                   <Span fontWeight="thin" fontSize="sm">

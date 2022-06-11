@@ -1,33 +1,19 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   createUserWithEmailAndPassword,
-  getRedirectResult,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signInWithRedirect,
   signOut,
 } from "firebase/auth"; //auth state에 대한 변경점을 감지
+import { createUser, getUser } from "lib/apis/user";
 import { useRouter } from "next/router";
-import {
-  IUserInfo,
-  selectUserInfoState,
-  setLoggedIn,
-} from "./slices/userSlice";
-import { AppThunkDispatch } from "./store";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { auth, db } from "utils/firebase/app";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
-import axios from "axios";
+import { auth } from "utils/firebase/app";
+import { selectUserInfoState, setLoggedIn } from "./slices/userSlice";
+import { AppThunkDispatch } from "./store";
 
 const AuthContext = createContext<any>({});
 
@@ -35,40 +21,33 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
-  const { isLoggedIn } = useSelector(selectUserInfoState);
   const dispatch = useDispatch<AppThunkDispatch>();
   const router = useRouter();
+
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken();
         await axios.post("/api/auth/login", { idToken });
 
-        const dbUser: any = await getDoc(doc(db, "User", user.uid));
+        const dbUser: any = await getUser(user.uid);
+        dispatch(
+          setLoggedIn({ uid: user.uid, nickname: dbUser.data()?.nickname })
+        );
+
         if (!dbUser.data()) {
           /* 새 사용자 */
-          const docData = {
-            uid: user.uid,
-            nickname: "",
-          };
-          //사용자 추가
-          await setDoc(doc(db, "User", user.uid), docData);
-          dispatch(setLoggedIn({ uid: user.uid, nickname: "" }));
           // 닉네임 설정
+          await createUser(user.uid);
+        }
+        if (!dbUser.data() || !dbUser.data().nickname) {
           router.push("/setInfo");
-        } else {
-          dispatch(
-            setLoggedIn({ uid: user.uid, nickname: dbUser.data().nickname })
-          );
-          if (!dbUser.data().nickname) {
-            router.push("/setInfo");
-          }
         }
-        // const idToken = await user.getIdToken();
         setUser(user);
-        if (router.pathname === "/") {
-          router.push("/main");
-        }
+
+        // if (router.pathname === "/") {
+        //   router.push("/");
+        // }
       } else {
         setUser(null);
       }

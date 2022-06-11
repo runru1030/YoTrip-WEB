@@ -1,11 +1,13 @@
 import MyTripItemDetailTemplate from "components/MyTrip/_templates/MyTripItemDetailTemplate";
 import {
   getMyTripInfo,
-  getMyTripItemDetailInfo
+  getMyTripItemDetailInfo,
 } from "modules/slices/myTripItemSlice";
+import { setLoggedIn } from "modules/slices/userSlice";
 import wrapper from "modules/store";
 import cookies from "next-cookies";
 import React from "react";
+import { firebaseAuth } from "utils/firebaseAdmin/app";
 
 interface IProps {}
 const detail = ({}: IProps) => {
@@ -19,8 +21,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { uid } = cookies(ctx);
     const { tid, id } = ctx.query;
     if (uid && tid) {
+      await firebaseAuth.getUser(uid).then(() => {
+        store.dispatch(setLoggedIn({}));
+      });
       await store.dispatch(getMyTripInfo({ uid, tid }));
-      await store.dispatch(getMyTripItemDetailInfo({ uid, tid, itemid: id }));
+      await store.dispatch(getMyTripItemDetailInfo({ uid, tid, itemId: id }));
     }
 
     return {

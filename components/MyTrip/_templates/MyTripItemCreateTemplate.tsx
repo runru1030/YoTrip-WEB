@@ -31,13 +31,15 @@ import {
 import { db } from "utils/firebase/app";
 import { selectUserInfoState } from "modules/slices/userSlice";
 import { async } from "@firebase/util";
+import { updateMyTrip, updateMyTripItem } from "lib/apis/trip";
+import { createTripItemDetail } from "lib/services/trip";
 
 const MyTripItemCreateTemplate = () => {
   const router = useRouter();
   const { tid, id } = router.query as { tid: string; id: string };
   const { currTripItem, trip } = useSelector(selectMyTripItemState);
   const { userInfo } = useSelector(selectUserInfoState);
-  const [itemDetail, setItemDetail] = useState({
+  const [itemDetailInfo, setItemDetail] = useState({
     title: "",
     cost: 0,
     startDate: new Date(),
@@ -70,40 +72,16 @@ const MyTripItemCreateTemplate = () => {
   };
   const handleCreateItemDetail = async () => {
     try {
-      if (itemDetail.title === "" || itemDetail.cost === 0)
+      if (itemDetailInfo.title === "" || itemDetailInfo.cost === 0)
         throw new Error("입력사항을 확인해주세요.");
-
-      await addDoc(
-        collection(
-          db,
-          "Trip",
-          userInfo.uid,
-          "myTripInfo",
-          tid,
-          "tripItems",
-          id,
-          "detail"
-        ),
-        {
-          ...itemDetail,
-        }
-      );
-      const myTripRef = doc(db, "Trip", userInfo.uid, "myTripInfo", tid);
-      await updateDoc(myTripRef, { cost: increment(itemDetail.cost) });
-      const myTripItemRef = doc(
-        db,
-        "Trip",
-        userInfo.uid,
-        "myTripInfo",
+      await createTripItemDetail({
+        uid: userInfo.uid,
         tid,
-        "tripItems",
-        id
-      );
-      await updateDoc(myTripItemRef, { cost: increment(itemDetail.cost) }).then(
-        () => {
-          router.back();
-        }
-      );
+        itemId: id,
+        itemDetailInfo,
+      }).then(() => {
+        router.back();
+      });
     } catch (error: any) {
       alert(error.message);
       console.error(error);
@@ -126,7 +104,7 @@ const MyTripItemCreateTemplate = () => {
             inputType="primaryDark"
             borderRadius="12px"
             id="title"
-            value={itemDetail.title}
+            value={itemDetailInfo.title}
             onChange={handleChangeInput}
             required
           ></Input>
@@ -139,11 +117,11 @@ const MyTripItemCreateTemplate = () => {
               placeholder="비용"
               inputType="primaryDark"
               id="cost"
-              value={itemDetail.cost !== 0 ? itemDetail.cost : ""}
+              value={itemDetailInfo.cost !== 0 ? itemDetailInfo.cost : ""}
               onChange={handleChangeInput}
               required
             ></Input>
-            {/* <CostInputLabel>{numberWithCommas(itemDetail.cost)}</CostInputLabel> */}
+            {/* <CostInputLabel>{numberWithCommas(itemDetailInfo.cost)}</CostInputLabel> */}
           </CostInputWrapper>
           <Flex dir="column" gap="16px">
             <Span bold>비용 기간</Span>

@@ -1,28 +1,27 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+
 import Button from "components/_atoms/Button";
 import Input from "components/_atoms/Input";
 import Span from "components/_atoms/Span";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
+import { createTrip } from "lib/services/trip";
 import {
-  ICountryInfo,
   ICountryTotalInfo,
   initState,
-  ITripInfo,
   selectTripCreationState,
   setTripInfo,
   T_TRIP_CREATE_STATUS,
 } from "modules/slices/tripCreationSlice";
 import { selectUserInfoState } from "modules/slices/userSlice";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import {
   DarkCardWrapper,
   MainCardWrapper,
   MainWrapper,
   ShadowRound,
 } from "styles/mixin";
-import { db } from "utils/firebase/app";
 import BottomBar from "../../_templates/BottomBar";
 import TripConfirmCreation from "../_molecules/TripConfirmCreation";
 import TripCountryCreation from "../_molecules/TripCountryCreation";
@@ -65,7 +64,6 @@ const AddTripTemplate = () => {
     try {
       if (tripInfo.countries.length === 0)
         throw new Error("트립 국가를 추가해주세요.");
-
       const minStart = (tripInfo.countries as ICountryTotalInfo[]).reduce(
         (prev, current) => {
           return prev.startDate < current.startDate ? prev : current;
@@ -76,37 +74,16 @@ const AddTripTemplate = () => {
           return prev.endDate > current.endDate ? prev : current;
         }
       );
-      const docRef = await addDoc(
-        collection(db, "Trip", userInfo.uid, "myTripInfo"),
-        {
+
+      await createTrip({
+        uid: userInfo.uid,
+        tripInfo: {
           ...tripInfo,
           startDate: minStart.startDate,
           endDate: maxEnd.endDate,
           createdAt: serverTimestamp(),
-        }
-      );
-      await addDoc(
-        collection(
-          db,
-          "Trip",
-          userInfo.uid,
-          "myTripInfo",
-          docRef.id,
-          "tripItems"
-        ),
-        { title: "숙소", cost: 0 }
-      );
-      await addDoc(
-        collection(
-          db,
-          "Trip",
-          userInfo.uid,
-          "myTripInfo",
-          docRef.id,
-          "tripItems"
-        ),
-        { title: "항공", cost: 0 }
-      ).then(() => router.push("/main"));
+        },
+      }).then(() => router.push("/"));
     } catch (error: any) {
       alert(error.message);
       console.error(error);
