@@ -6,6 +6,7 @@ import {
   delTripCountry,
   ICountryInfo,
   ICountryTotalInfo,
+  ITripInfo,
   selectTripCreationState,
   setStatus,
 } from "modules/slices/tripCreationSlice";
@@ -31,7 +32,7 @@ const TripConfirmCreation = () => {
   return (
     <MainCardWrapper dir="column" gap="16px">
       <Span bold>트립 여정</Span>
-      {tripInfo.countries.map((country, idx) => (
+      {(tripInfo as ITripInfo).countries.map((country, idx) => (
         <DarkCardWrapper
           key={country.name + country.detail + idx}
           dir="column"
