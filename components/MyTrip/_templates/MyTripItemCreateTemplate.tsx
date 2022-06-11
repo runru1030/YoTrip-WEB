@@ -14,8 +14,10 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import TripInfoContainer from "../_molecules/TripInfoContainer";
 import BottomBar from "components/_templates/BottomBar";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  getMyTripInfo,
+  getMyTripItemDetailInfo,
   ITripItemDetailInfo,
   selectMyTripItemState,
 } from "modules/slices/myTripItemSlice";
@@ -45,6 +47,8 @@ const MyTripItemCreateTemplate = () => {
     startDate: new Date(),
     endDate: new Date(),
   });
+
+  const dispatch = useDispatch();
   const handleChangeInput = (e: React.ChangeEvent) => {
     const { id, value } = e.target as HTMLInputElement;
     if (id === "cost") {
@@ -80,6 +84,10 @@ const MyTripItemCreateTemplate = () => {
         itemId: id,
         itemDetailInfo,
       }).then(() => {
+        dispatch(getMyTripInfo({ uid: userInfo.uid, tid }));
+        dispatch(
+          getMyTripItemDetailInfo({ uid: userInfo.uid, tid, itemId: id })
+        );
         router.back();
       });
     } catch (error: any) {

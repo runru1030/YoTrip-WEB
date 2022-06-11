@@ -7,8 +7,13 @@ import {
   updateMyTrip,
   updateMyTripItem,
 } from "lib/apis/trip";
-import { ITripItemDetailInfo } from "modules/slices/myTripItemSlice";
+import {
+  getMyTripInfo,
+  getMyTripItemDetailInfo,
+  ITripItemDetailInfo,
+} from "modules/slices/myTripItemSlice";
 import { ITripInfo } from "modules/slices/tripCreationSlice";
+import { useDispatch } from "react-redux";
 export const createTrip = async ({
   uid,
   tripInfo,
@@ -59,7 +64,9 @@ export const createTripItemDetail = async ({
       updateInfo: { cost: increment(itemDetailInfo.cost) },
     });
     return {};
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const deleteTripItemDetail = async ({
@@ -94,5 +101,7 @@ export const deleteTripItemDetail = async ({
       updateInfo: { cost: increment(-cost) },
     });
     return {};
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };

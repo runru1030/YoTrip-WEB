@@ -1,7 +1,7 @@
 export const ColorScheme = {
   primary: "#0EC96F",
   negative: "#FF512B",
-  white: "#FFFFFF",
+  white: "#EDEDED",
 
   gray0: "#272727",
   gray100: "#232323",

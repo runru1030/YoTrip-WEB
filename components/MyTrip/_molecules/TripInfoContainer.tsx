@@ -11,16 +11,21 @@ interface IProps {}
 const TripInfoContainer = ({}: IProps) => {
   const { myTripInfo } = useSelector(selectMyTripItemState);
   return (
-    <Flex dir="column" gap="16px">
-      <Flex spaceBetween>
-        <Span fontWeight="bold" fontSize="md">
+    <Flex dir="column" gap="16px" padding="16px 0" vAlign>
+      {/* <Flex spaceBetween width="100%"> */}
+        <Span fontWeight="bold" fontSize="nm" textAlign="center">
           {myTripInfo.title}
         </Span>
-        <Span textColor="gray300" fontWeight="semiBold" fontSize="sm">
+        <Span
+          textColor="gray300"
+          fontWeight="semiBold"
+          fontSize="sm"
+          letterSpacing="1px"
+        >
           {timeStampFormater(myTripInfo.startDate)} -
           {timeStampFormater(myTripInfo.endDate)}
         </Span>
-      </Flex>
+      {/* </Flex> */}
       <Flex gap="10px">
         {myTripInfo.mateList.map((mate: any) => (
           <Profile
@@ -29,7 +34,7 @@ const TripInfoContainer = ({}: IProps) => {
           />
         ))}
       </Flex>
-      <TotalCostWrapper centerVH>
+      <TotalCostWrapper width="100%" centerVH>
         <Span textColor="primary" bold fontSize="lg">
           ₩ {numberWithCommas(myTripInfo.cost)}
         </Span>
@@ -42,5 +47,5 @@ export default TripInfoContainer;
 const TotalCostWrapper = styled(Flex)`
   background-color: ${({ theme }) => theme.colors.gray100};
   border-radius: 16px;
-  padding: 8px;
+  padding: 16px;
 `;

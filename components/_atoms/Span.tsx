@@ -16,6 +16,7 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
   padding?: string;
   textAlign?: "right" | "left" | "center" | "justify";
   bold?: boolean;
+  letterSpacing?: string;
 }
 
 const Span: React.FC<IProps> = ({
@@ -28,6 +29,7 @@ const Span: React.FC<IProps> = ({
   padding,
   textAlign,
   bold,
+  letterSpacing,
   ...restParams
 }) => {
   return (
@@ -41,6 +43,7 @@ const Span: React.FC<IProps> = ({
         margin,
         padding,
         textAlign,
+        letterSpacing,
       }}
       {...restParams}
     >
@@ -61,4 +64,5 @@ const StyledSpan = styled.span<IProps>`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   text-align: ${(props) => props.textAlign};
+  letter-spacing: ${(props) => props.letterSpacing};
 `;

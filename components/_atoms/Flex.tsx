@@ -56,6 +56,7 @@ const Flex = React.forwardRef<HTMLDivElement, IProps>(
           borderRadius,
           maxWidth,
           width,
+          height,
           pos,
           ref,
           flex,

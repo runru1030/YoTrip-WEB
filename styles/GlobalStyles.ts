@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
     line-height: 1.5;
     background-color: ${ColorScheme.gray0};
-    color:white;
+    color:#EDEDED;
   }
 
 `;
