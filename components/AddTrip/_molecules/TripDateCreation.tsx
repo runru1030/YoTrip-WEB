@@ -15,21 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { MainCardWrapper } from "styles/mixin";
 import Flex from "components/_atoms/Flex";
 import CancelButton from "./CancelButton";
+import useDateSelect from "hooks/useDateSelect";
+import DateSelector from "components/_molecules/DateSelector";
 
 const TripDateCreation = () => {
   const { tripCreationSatus } = useSelector(selectTripCreationState);
-  const [selectionRange, setSelectionRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
-  const handleSelectDate = (ranges: any) => {
-    setSelectionRange({
-      startDate: ranges["selection"].startDate,
-      endDate: ranges["selection"].endDate,
-      key: ranges["selection"].key,
-    });
-  };
+  const { selectionRange, handleSelectDate } = useDateSelect();
   const dispatch = useDispatch();
   return (
     <MainCardWrapper dir="column" gap="16px">
@@ -37,11 +28,7 @@ const TripDateCreation = () => {
         <Span bold>트립 기간</Span>
         <CancelButton type={tripCreationSatus} />
       </Flex>
-      <DateRange
-        editableDateInputs={true}
-        ranges={[selectionRange]}
-        onChange={handleSelectDate}
-      />
+      <DateSelector ranges={[selectionRange]} onChange={handleSelectDate} />
       <Button
         onClick={() => {
           dispatch(

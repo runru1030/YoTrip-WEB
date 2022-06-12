@@ -97,7 +97,7 @@ const MyTripItemDetailTemplate: React.FC = ({}) => {
               </ImgWrapper>
             )}
           </ItemScrollWrapper>
-          <CostWrapper width="100%" textAlign="center" fontSize="lg" bold>
+          <CostWrapper width="100%" textAlign="center" fontSize="md" >
             ₩ {numberWithCommas(currTripItem.cost)}
           </CostWrapper>
         </MainCardWrapper>

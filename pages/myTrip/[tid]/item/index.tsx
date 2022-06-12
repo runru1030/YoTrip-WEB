@@ -45,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { tid } = ctx.query;
     if (uid && tid) {
       await firebaseAuth.getUser(uid).then(() => {
-        store.dispatch(setLoggedIn({}));
+        store.dispatch(setLoggedIn({ uid }));
       });
       await store.dispatch(getMyTripInfo({ uid, tid: tid as string }));
       await store.dispatch(getMyTripItemsInfo({ uid, tid: tid as string }));

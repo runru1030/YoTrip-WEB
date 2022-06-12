@@ -14,9 +14,10 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { useDispatch, useSelector } from "react-redux";
 import { DarkCardWrapper, MainCardWrapper } from "styles/mixin";
-import { timeStampFormater } from "utils/function";
+import { dateFormater } from "utils/function";
 import DoDisturbOnOutlinedIcon from "@mui/icons-material/DoDisturbOnOutlined";
 import styled from "styled-components";
+import DateContainer from "components/_molecules/DateContainer";
 
 const TripConfirmCreation = () => {
   const { tripInfo } = useSelector(selectTripCreationState);
@@ -43,10 +44,10 @@ const TripConfirmCreation = () => {
             <Span bold fontSize="md">
               {country.name}
             </Span>
-            <Span textColor="gray300" fontWeight="semiBold" fontSize="sm">
-              {timeStampFormater(country.startDate)} -{" "}
-              {timeStampFormater(country.endDate)}
-            </Span>
+            <DateContainer
+              startDate={country.startDate as Date}
+              endDate={country.endDate as Date}
+            />
           </Flex>
           <Flex spaceBetween>
             <Span fontWeight="light">{country.detail}</Span>

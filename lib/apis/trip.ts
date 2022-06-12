@@ -7,6 +7,9 @@ import {
   DocumentReference,
   getDoc,
   getDocs,
+  orderBy,
+  query,
+  serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import {
@@ -46,7 +49,7 @@ export const addMyTripItem = async ({
   try {
     const ref = await addDoc(
       collection(db, "Trip", uid, "myTripInfo", tid, "tripItems"),
-      { ...itemInfo }
+      { ...itemInfo, createdAt: serverTimestamp() }
     );
     return ref as DocumentReference<DocumentData>;
   } catch (error) {
@@ -79,6 +82,7 @@ export const addMyTripItemDetail = async ({
       ),
       {
         ...itemDetailInfo,
+        createdAt: serverTimestamp(),
       }
     );
     return ref as DocumentReference<DocumentData>;
@@ -191,7 +195,10 @@ export const getMyTripItemList = async ({
 }) => {
   try {
     const ref = await getDocs(
-      collection(db, "Trip", uid, "myTripInfo", tid, "tripItems")
+      query(
+        collection(db, "Trip", uid, "myTripInfo", tid, "tripItems"),
+        orderBy("createdAt")
+      )
     );
     return {
       data: JSON.parse(
@@ -214,15 +221,18 @@ export const getMyTripItemDetailList = async ({
 }) => {
   try {
     const ref = await getDocs(
-      collection(
-        db,
-        "Trip",
-        uid,
-        "myTripInfo",
-        tid,
-        "tripItems",
-        itemId,
-        "detail"
+      query(
+        collection(
+          db,
+          "Trip",
+          uid,
+          "myTripInfo",
+          tid,
+          "tripItems",
+          itemId,
+          "detail"
+        ),
+        orderBy("createdAt")
       )
     );
     return {
@@ -237,7 +247,12 @@ export const getMyTripItemDetailList = async ({
 
 export const getMyTripList = async ({ uid }: { uid: string }) => {
   try {
-    const ref = await getDocs(collection(db, "Trip", uid, "myTripInfo"));
+    const ref = await getDocs(
+      query(
+        collection(db, "Trip", uid, "myTripInfo"),
+        orderBy("createdAt", "desc")
+      )
+    );
     return {
       data: jsonConverter(
         ref.docs.map((doc) => ({ id: doc.id, ...doc.data() }))

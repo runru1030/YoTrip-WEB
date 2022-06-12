@@ -89,7 +89,7 @@ const ItemWrapper = styled(Flex)`
   background-color: ${({ theme }) => theme.colors.gray200};
   padding: 12px;
   font-size: 12px;
-  ${ShadowRound({ x: "10px", y: "10", borderRadius: "16px" })};
+  ${ShadowRound({ x: "10px", y: "10px", borderRadius: "16px" })};
   height: 70px;
 `;
 const ItemAddWrapper = styled(Flex)`

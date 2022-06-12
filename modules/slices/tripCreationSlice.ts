@@ -9,8 +9,8 @@ export interface ICountryInfo {
   detail: string;
 }
 export interface ICountryTotalInfo extends ICountryInfo {
-  startDate: Timestamp;
-  endDate: Timestamp;
+  startDate: Timestamp | Date;
+  endDate: Timestamp | Date;
 }
 export interface ITripInfo {
   title: string;

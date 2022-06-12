@@ -5,7 +5,11 @@ export const numberWithCommas = (cost: number) => {
 };
 
 export const dateFormater = (date: Date) => {
-  return new Date(date).toISOString().split("T")[0].replaceAll("-", ".");
+  return new Date(date)
+    .toISOString()
+    .split("T")[0]
+    .replaceAll("-", ".")
+    .slice(2);
 };
 export const timeStampFormater = (time: Timestamp) => {
   return new Date(time.seconds * 1000 + time.nanoseconds / 1000000)
@@ -14,6 +18,7 @@ export const timeStampFormater = (time: Timestamp) => {
     .replaceAll("-", ".")
     .slice(2);
 };
+
 export const timeStampToDate = (time: Timestamp) => {
   return new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
 };
