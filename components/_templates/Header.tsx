@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import LogoIcon from "public/images/logo_sm.svg";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 const Header = () => {
   const router = useRouter();
   const handleClick = () => {
@@ -10,6 +12,13 @@ const Header = () => {
   return (
     <Head>
       <LogoIcon onClick={handleClick} />
+      {router.pathname !== "/calculate" && (
+        <Link href="/calculate">
+          <a>
+            <CurrencyExchangeOutlinedIcon />
+          </a>
+        </Link>
+      )}
     </Head>
   );
 };
@@ -22,8 +31,13 @@ const Head = styled.header`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.gray0};
   position: sticky;
   top: 0;
   z-index: 99;
+  a {
+    display: flex;
+    align-items: center;
+  }
 `;

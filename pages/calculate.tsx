@@ -1,4 +1,4 @@
-import CurrencyCalculator from "components/Calculate/_templates/CurrencyCalculator";
+import CalculateTemplate from "components/Calculate/_templates/CalculateTemplate";
 import { ITripInfo } from "modules/slices/tripCreationSlice";
 import React from "react";
 
@@ -12,7 +12,7 @@ export interface IItemProps {
 }
 
 const calculate = ({}) => {
-  return <CurrencyCalculator />;
+  return <CalculateTemplate />;
 };
 
 export default calculate;

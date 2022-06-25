@@ -15,7 +15,9 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${ColorScheme.gray0};
     color:#EDEDED;
   }
-
+  a{
+    all:unset;
+  }
 `;
 
 export default GlobalStyle;

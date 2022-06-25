@@ -1,12 +1,11 @@
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+
 import Flex from "components/_atoms/Flex";
 import Input from "components/_atoms/Input";
 import { getExchangeData, IExchange } from "lib/apis/calculate";
 import { CurrencyList } from "public/Currency";
-import React, { useEffect, useState } from "react";
-import { MainWrapper } from "styles/mixin";
 import Select from "../../_molecules/Select";
-import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import styled from "styled-components";
 
 const CurrencyCalculator = () => {
   const [calInfo, setCalInfo] = useState({
@@ -62,8 +61,6 @@ const CurrencyCalculator = () => {
     const { type } = e.target.dataset;
     const code = value.split(":")[0];
     const cost = value.split(":")[1];
-    console.log(value);
-
     switch (type) {
       case "from":
         setCalInfo((p) => ({
@@ -111,8 +108,8 @@ const CurrencyCalculator = () => {
   const [to, setTo] = useState<string>();
   const [from, setFrom] = useState<string>();
   return (
-    <Flex dir="column" gap="8px" width="100%" centerVH>
-      <Flex dir="column" width="90%" gap="16px">
+    <Flex dir="column" gap="36px" width="90%" height="40vh" centerVH>
+      <Flex dir="column" width="100%" gap="16px">
         <Select
           onSelect={handleChangeInput}
           dataType="from"
@@ -137,8 +134,7 @@ const CurrencyCalculator = () => {
           borderRadius="12px"
         />
       </Flex>
-      <CurrencyExchangeIcon />
-      <Flex dir="column" width="90%" gap="16px">
+      <Flex dir="column" width="100%" gap="16px">
         <Select
           onSelect={handleChangeInput}
           dataType="to"
