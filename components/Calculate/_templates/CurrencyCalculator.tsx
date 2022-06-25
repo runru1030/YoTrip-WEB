@@ -3,6 +3,10 @@ import Input from "components/_atoms/Input";
 import { getExchangeData, IExchange } from "lib/apis/calculate";
 import { CurrencyList } from "public/Currency";
 import React, { useEffect, useState } from "react";
+import { MainWrapper } from "styles/mixin";
+import Select from "../../_molecules/Select";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import styled from "styled-components";
 
 const CurrencyCalculator = () => {
   const [calInfo, setCalInfo] = useState({
@@ -22,7 +26,7 @@ const CurrencyCalculator = () => {
     }
     const year = date.getFullYear();
     const month = ("0" + (1 + date.getMonth())).slice(-2);
-    const day = ("0" + date.getDate() + 1).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
     return year + month + day;
   };
   const getCost = (cur_unit: string) => {
@@ -58,6 +62,8 @@ const CurrencyCalculator = () => {
     const { type } = e.target.dataset;
     const code = value.split(":")[0];
     const cost = value.split(":")[1];
+    console.log(value);
+
     switch (type) {
       case "from":
         setCalInfo((p) => ({
@@ -102,52 +108,69 @@ const CurrencyCalculator = () => {
         break;
     }
   };
+  const [to, setTo] = useState<string>();
+  const [from, setFrom] = useState<string>();
   return (
-    <Flex dir="column" gap="8px" width="90%" centerVH>
-      <Flex dir="column">
-        <select onChange={handleChangeInput} data-type="from">
-          {symbols.map((symbol: any) =>
-            symbol.cur_unit === "USD" ? (
-              <option
-                selected
-                value={`${symbol.cur_unit}:${symbol.deal_bas_r}`}
-              >
-                {CurrencyList[symbol.cur_unit] + " " + symbol.cur_unit}
-              </option>
-            ) : (
-              <option value={`${symbol.cur_unit}:${symbol.deal_bas_r}`}>
-                {CurrencyList[symbol.cur_unit] + " " + symbol.cur_unit}
-              </option>
-            )
-          )}
-        </select>
-        <Input
+    <Flex dir="column" gap="8px" width="100%" centerVH>
+      <Flex dir="column" width="90%" gap="16px">
+        <Select
+          onSelect={handleChangeInput}
+          dataType="from"
+          value={from}
+          setValue={setFrom}
+          width="100%"
+        >
+          {symbols.map((symbol: any) => (
+            <option
+              value={`${symbol.cur_unit}:${symbol.deal_bas_r}`}
+              key={`${symbol.cur_unit}-from`}
+              selected={symbol.cur_unit === "USD"}
+            >
+              {CurrencyList[symbol.cur_unit] + " " + symbol.cur_unit}
+            </option>
+          ))}
+        </Select>
+        <CostInput
           value={calInfo.from}
           id="from"
           onChange={handleChangeCostInput}
+          borderRadius="12px"
         />
       </Flex>
-      <Flex dir="column">
-        <select onChange={handleChangeInput} data-type="to">
-          {symbols.map((symbol: any) =>
-            symbol.cur_unit === "KRW" ? (
-              <option
-                selected
-                value={`${symbol.cur_unit}:${symbol.deal_bas_r}`}
-              >
-                {CurrencyList[symbol.cur_unit] + " " + symbol.cur_unit}
-              </option>
-            ) : (
-              <option value={`${symbol.cur_unit}:${symbol.deal_bas_r}`}>
-                {CurrencyList[symbol.cur_unit] + " " + symbol.cur_unit}{" "}
-              </option>
-            )
-          )}
-        </select>
-        <Input value={calInfo.to} id="to" onChange={handleChangeCostInput} />
+      <CurrencyExchangeIcon />
+      <Flex dir="column" width="90%" gap="16px">
+        <Select
+          onSelect={handleChangeInput}
+          dataType="to"
+          value={to}
+          setValue={setTo}
+        >
+          {symbols.map((symbol: any) => (
+            <option
+              value={`${symbol.cur_unit}:${symbol.deal_bas_r}`}
+              key={`${symbol.cur_unit}-to`}
+              selected={symbol.cur_unit === "KRW"}
+            >
+              {CurrencyList[symbol.cur_unit] + " " + symbol.cur_unit}
+            </option>
+          ))}
+        </Select>
+        <CostInput
+          value={calInfo.to}
+          id="to"
+          onChange={handleChangeCostInput}
+          borderRadius="12px"
+        />
       </Flex>
     </Flex>
   );
 };
 
 export default CurrencyCalculator;
+const CostInput = styled(Input)`
+  text-align: right;
+  font-size: large;
+  &[id="to"] {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;

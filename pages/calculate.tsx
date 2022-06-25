@@ -1,21 +1,6 @@
-import MyTripItemTemplate from "components/MyTrip/_templates/MyTripItemTemplate";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { withIronSessionSsr } from "iron-session/next";
-import { ironOptions } from "lib/ironSessionConfig";
-import {
-  getMyTripInfo,
-  getMyTripItemsInfo,
-} from "modules/slices/myTripItemSlice";
+import CurrencyCalculator from "components/Calculate/_templates/CurrencyCalculator";
 import { ITripInfo } from "modules/slices/tripCreationSlice";
-import { selectUserInfoState, setLoggedIn } from "modules/slices/userSlice";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { db } from "utils/firebase/app";
-import cookies from "next-cookies";
-import wrapper from "modules/store";
-import { firebaseAuth } from "utils/firebaseAdmin/app";
-import CurrencyCalculator from "components/_molecules/CurrencyCalculator";
+import React from "react";
 
 export interface IItemProps {
   myTripInfo: ITripInfo;
