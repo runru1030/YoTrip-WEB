@@ -5,7 +5,7 @@ const fireConfig = {
   type: "service_account",
   project_id: process.env.NEXT_PUBLIC_PID,
   private_key_id: process.env.NEXT_PUBLIC_PKID,
-  private_key: process.env.NEXT_PUBLIC_PK,
+  private_key: process.env.NEXT_PUBLIC_PK?.replace(/\\n/g, "\n"),
   client_email: process.env.NEXT_PUBLIC_CEMAIL,
   client_id: process.env.NEXT_PUBLIC_CIE,
   auth_uri: process.env.NEXT_PUBLIC_AUTH_URI,
