@@ -8,7 +8,7 @@ import type { NextPage } from "next";
 import cookies from "next-cookies";
 import { firebaseAuth } from "utils/firebaseAdmin/app";
 interface IProps {
-  myTrips: ITripInfo[];
+  myTrips: ITripInfo[] | null;
   isLoggedIn: boolean;
 }
 
@@ -20,8 +20,8 @@ export default Home;
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (ctx) => {
     const { uid } = cookies(ctx);
-    let myTrips: any = [];
-    let isLoggedIn;
+    let myTrips: any = null;
+    let isLoggedIn = false;
     if (uid) {
       await firebaseAuth.getUser(uid).then(() => {
         isLoggedIn = true;
@@ -31,7 +31,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     return {
       props: {
-        myTrips: myTrips?.data,
+        myTrips: myTrips ? myTrips.data : null,
         isLoggedIn,
       },
     };
