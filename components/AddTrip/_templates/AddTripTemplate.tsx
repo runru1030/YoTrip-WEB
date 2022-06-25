@@ -106,7 +106,7 @@ const AddTripTemplate = () => {
         <MainCardWrapper dir="column" gap="16px">
           {TripInfoAddContent[tripCreationSatus as T_TRIP_CREATE_STATUS]}
         </MainCardWrapper>
-        <MainCardWrapper dir="column" gap="16px">
+        {/* <MainCardWrapper dir="column" gap="16px">
           <Span bold>트립 메이트</Span>
           <Input
             type="text"
@@ -117,7 +117,7 @@ const AddTripTemplate = () => {
             value={mateNickname}
             onChange={handleChangeInput}
           ></Input>
-        </MainCardWrapper>
+        </MainCardWrapper> */}
       </MainScrollWrapper>
       <BottomBar>
         <AddButton

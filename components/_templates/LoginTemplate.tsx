@@ -35,13 +35,13 @@ const LoginTemplate = () => {
         </Span>
       </Flex>
       <Flex dir="row" flex={0.4} spaceBetween width="50%">
-        <CircleButton
+        {/* <CircleButton
           bgColor="#FEE500"
           data-type="kakao"
           onClick={handleClickLogin}
         >
           <KakaoIcon />
-        </CircleButton>
+        </CircleButton> */}
         <CircleButton
           bgColor="#FFFFFF"
           data-type="google"
