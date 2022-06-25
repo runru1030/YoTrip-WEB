@@ -45,8 +45,9 @@ const TripConfirmCreation = () => {
               {country.name}
             </Span>
             <DateContainer
-              startDate={country.startDate as Date}
-              endDate={country.endDate as Date}
+              startDate={country.startDate}
+              endDate={country.endDate}
+              type="Date"
             />
           </Flex>
           <Flex spaceBetween>

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { Timestamp } from "firebase/firestore";
 import { ICountryInfo } from "modules/slices/tripCreationSlice";
 import { useDispatch } from "react-redux";
+import DateContainer from "components/_molecules/DateContainer";
 interface IProps {
   tripInfo: {
     id: number;
@@ -36,10 +37,10 @@ const TripCard = ({ tripInfo }: IProps) => {
           <Span>{country.name}</Span>
         ))}
       </Flex>
-      <Span fontSize="sm" /*  textColor="gray300" */ fontWeight="thin">
-        {timeStampFormater(tripInfo.startDate)} -{" "}
-        {timeStampFormater(tripInfo.endDate)}
-      </Span>
+      <DateContainer
+        startDate={tripInfo.startDate}
+        endDate={tripInfo.endDate}
+      />
       <Flex gap="10px">
         {tripInfo.mateList.map((mate) => (
           <Profile profileUrl={mate.profileUrl} />

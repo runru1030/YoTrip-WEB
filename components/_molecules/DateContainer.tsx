@@ -1,11 +1,17 @@
 import Span from "components/_atoms/Span";
+import { Timestamp } from "firebase/firestore";
 import React from "react";
-import { dateFormater } from "utils/function";
+import { dateFormater, timeStampFormater } from "utils/function";
 interface IProps {
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | Timestamp;
+  endDate: Date | Timestamp;
+  type?: "Date" | "Timestamp";
 }
-const DateContainer: React.FC<IProps> = ({ startDate, endDate }) => {
+const DateContainer: React.FC<IProps> = ({
+  startDate,
+  endDate,
+  type = "Timestamp",
+}) => {
   return (
     <Span
       textColor="gray300"
@@ -13,7 +19,16 @@ const DateContainer: React.FC<IProps> = ({ startDate, endDate }) => {
       fontSize="sm"
       letterSpacing="1px"
     >
-      {dateFormater(startDate)} -{dateFormater(endDate)}
+      {type === "Date" ? (
+        <>
+          {dateFormater(startDate as Date)} -{dateFormater(endDate as Date)}
+        </>
+      ) : (
+        <>
+          {timeStampFormater(startDate as Timestamp)} -
+          {timeStampFormater(endDate as Timestamp)}
+        </>
+      )}
     </Span>
   );
 };

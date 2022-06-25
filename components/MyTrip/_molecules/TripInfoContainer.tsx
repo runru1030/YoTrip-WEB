@@ -1,5 +1,6 @@
 import Flex from "components/_atoms/Flex";
 import Span from "components/_atoms/Span";
+import DateContainer from "components/_molecules/DateContainer";
 import Profile from "components/_molecules/Profile";
 import { selectMyTripItemState } from "modules/slices/myTripItemSlice";
 import React from "react";
@@ -13,18 +14,13 @@ const TripInfoContainer = ({}: IProps) => {
   return (
     <Flex dir="column" gap="16px" padding="16px 0" vAlign>
       {/* <Flex spaceBetween width="100%"> */}
-        <Span fontWeight="bold" fontSize="nm" textAlign="center">
-          {myTripInfo.title}
-        </Span>
-        <Span
-          textColor="gray300"
-          fontWeight="semiBold"
-          fontSize="sm"
-          letterSpacing="1px"
-        >
-          {timeStampFormater(myTripInfo.startDate)} -
-          {timeStampFormater(myTripInfo.endDate)}
-        </Span>
+      <Span fontWeight="bold" fontSize="nm" textAlign="center">
+        {myTripInfo.title}
+      </Span>
+      <DateContainer
+        startDate={myTripInfo.startDate}
+        endDate={myTripInfo.endDate}
+      />
       {/* </Flex> */}
       <Flex gap="10px">
         {myTripInfo.mateList.map((mate: any) => (

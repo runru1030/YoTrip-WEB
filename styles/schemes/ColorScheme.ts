@@ -4,8 +4,8 @@ export const ColorScheme = {
   negative: "#FF512B",
   white: "#EDEDED",
 
-  gray0: "#272727",
-  gray100: "#232323",
-  gray200: "#353535",
+  gray0: "#232323",
+  gray100: "#1d1d1d",
+  gray200: "#2c2c2c",
   gray300: "#929292",
 };

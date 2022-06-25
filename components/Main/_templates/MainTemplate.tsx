@@ -28,7 +28,7 @@ const MainTemplate: React.FC<IProps> = ({ myTrips }) => {
             <TripCard tripInfo={tripInfo} key={tripInfo.id} />
           ))}
         </Grid> */}
-        <Flex dir="column" gap="10px" width="90%">
+        <Flex dir="column" gap="16px" width="90%">
           {tripInfoList?.map((tripInfo: any) => (
             <TripCard tripInfo={tripInfo} key={tripInfo.id} />
           ))}
